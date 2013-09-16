@@ -1,0 +1,217 @@
+[
+
+    {
+
+        "id"        : 0,
+        "name"      : "case01",
+        "thumbnail" : { "small": "sample01_small.jpg" },
+        "type"      : "main",
+        "status"    : "done",
+        "brief"     : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta mi eget tortor sollicitudin fermentum.",
+        "content"   : "<p>Suspendisse vitae aliquam odio. Curabitur nulla nunc, fermentum sodales enim vel, cursus varius risus. Quisque ac velit vitae sapien consequat condimentum. Cras aliquet mauris velit, id dapibus leo bibendum ut. Morbi dapibus neque lacus.</p>",
+        "schedule"  : {
+            "start" : { "year": 2011, "month":  7, "day": 17 },
+            "end"   : { "year": 2012, "month":  8, "day": 20 },
+            "hours" : 120
+        },
+        "done"      : {
+            "start" : { "year": 2011, "month":  7, "day": 17 },
+            "end"   : { "year": 2012, "month":  9, "day":  1 },
+            "hours" : 100
+        },
+        "tasks"     :   [
+                            {
+                                "name"  : "Videos: Multiple format support.",
+                                "state" : "done",
+                                "start" : { "year": 2012, "month":  5, "day": 20 },
+                                "end"   : { "year": 2012, "month":  5, "day": 21 }
+                            },
+
+                            {
+                                "name"  : "Add animation.",
+                                "state" : "done",
+                                "start" : { "year": 2012, "month":  5, "day": 21 },
+                                "end"   : { "year": 2012, "month":  5, "day": 22 }
+                            }
+                        ],
+        "relationship": null
+    },
+
+    {
+        "id"        : 1,
+        "name"      : "case02",
+        "thumbnail" : { "small": null },
+        "type"      : "sub",
+        "status"    : "done",
+        "brief"     : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta mi eget tortor sollicitudin fermentum.",
+        "content"   : "<p>Etiam imperdiet, est cursus pellentesque tempus, ipsum odio vestibulum ligula, et gravida metus eros a tellus. Morbi luctus pharetra risus, sit amet dignissim risus euismod et. Duis sodales dolor eu nibh ullamcorper, et volutpat tortor cursus.</p>",
+        "schedule"  : {
+            "start" : { "year": 2012, "month":  5, "day": 20 },
+            "end"   : { "year": 2013, "month":  3, "day": 20 },
+            "hours" : 40
+        },
+        "done"      : {
+            "start" : { "year": 2012, "month":  5, "day": 20 },
+            "end"   : { "year": 2012, "month": 10, "day":  3 },
+            "hours" : 50
+        },
+
+        "tasks"      : null,
+        "relationship": [0]
+    },
+
+    {
+        "id"        : 2,
+        "name"      : "case03",
+        "thumbnail" : { "small": "sample02_small.jpg" },
+        "type"      : "main",
+        "status"    : "done",
+        "brief"     : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta mi eget tortor sollicitudin fermentum.",
+        "content"   : "<p>Nulla quis velit nisl. Praesent vitae pretium augue. Donec accumsan viverra auctor. Sed tincidunt posuere consequat. Etiam imperdiet, est cursus pellentesque tempus, ipsum odio vestibulum ligula, et gravida metus eros a tellus. Morbi luctus pharetra risus, sit amet dignissim risus euismod et. Duis sodales dolor eu nibh ullamcorper, et volutpat tortor cursus.</p>",
+        "schedule" : {
+            "start" : { "year": 2012, "month": 10, "day": 11 },
+            "end"   : { "year": 2013, "month": 1, "day": 10 },
+            "hours" : 120
+        },
+        "done"      : {
+            "start" : { "year": 2012, "month": 10, "day": 11 },
+            "end"   : { "year": 2013, "month":  1, "day": 22 },
+            "hours" : 80
+        },
+        "tasks"     :   [
+                            {
+                                "name"  : "Sed ea nisl gubergren.",
+                                "state" : "done",
+                                "start" : { "year": 2012, "month":  10, "day": 11 },
+                                "end"   : { "year": 2012, "month":  10, "day": 15 }
+                            },
+
+                            {
+                                "name"  : "albucius lobortis referrentur ne vix.",
+                                "state" : "done",
+                                "start" : { "year": 2012, "month":  10, "day": 12 },
+                                "end"   : { "year": 2012, "month":  10, "day": 22 }
+                            },
+
+                            {
+                                "name"  : "Sed ea nisl gubergren.",
+                                "state" : "done",
+                                "start" : { "year": 2012, "month":  10, "day": 15 },
+                                "end"   : { "year": 2012, "month":  10, "day": 24 }
+                            },
+
+                            {
+                                "name"  : "albucius lobortis referrentur ne vix.",
+                                "state" : "done",
+                                "start" : { "year": 2012, "month":  10, "day": 20 },
+                                "end"   : { "year": 2012, "month":  11, "day":  2 }
+                            }
+                        ],
+
+        "relationship" : [1]
+
+    },
+
+    {
+        "id"        : 3,
+        "name"      : "case04",
+        "thumbnail" : { "small": "sample03_small.jpg" },
+        "type"      : "main",
+        "status"    : "doing",
+        "brief"     : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta mi eget tortor sollicitudin fermentum.",
+        "content"   : "<p>Nulla quis velit nisl. Praesent vitae pretium augue. Donec accumsan viverra auctor. Sed tincidunt posuere consequat. Etiam imperdiet, est cursus pellentesque tempus, ipsum odio vestibulum ligula, et gravida metus eros a tellus. Morbi luctus pharetra risus, sit amet dignissim risus euismod et. Duis sodales dolor eu nibh ullamcorper, et volutpat tortor cursus.</p>",
+        "schedule" : {
+            "start" : { "year": 2013, "month": 3, "day": 3 },
+            "end"   : { "year": 2013, "month": 10, "day": 1 },
+            "hours" : 120
+        },
+        "done"      : {
+            "start" : { "year": 2013, "month": 3, "day": 11 },
+            "end"   : null,
+            "hours" : 80
+        },
+        "tasks"     :   [
+                            {
+                                "name"  : "Sed ea nisl gubergren.",
+                                "state" : "doing",
+                                "start" : { "year": 2012, "month":  10, "day": 11 },
+                                "end"   : { "year": 2012, "month":  10, "day": 15 }
+                            },
+
+                            {
+                                "name"  : "albucius lobortis referrentur ne vix.",
+                                "state" : "done",
+                                "start" : { "year": 2012, "month":  10, "day": 12 },
+                                "end"   : { "year": 2012, "month":  10, "day": 22 }
+                            },
+
+                            {
+                                "name"  : "Sed ea nisl gubergren.",
+                                "state" : "doing",
+                                "start" : { "year": 2012, "month":  10, "day": 15 },
+                                "end"   : { "year": 2012, "month":  10, "day": 24 }
+                            },
+
+                            {
+                                "name"  : "albucius lobortis referrentur ne vix.",
+                                "state" : "new",
+                                "start" : { "year": 2012, "month":  10, "day": 20 },
+                                "end"   : { "year": 2012, "month":  11, "day":  2 }
+                            }
+                        ],
+
+        "relationship" : [0, 1]
+
+    },
+
+    {
+        "id"        : 4,
+        "name"      : "case05",
+        "thumbnail" : { "small": null },
+        "type"      : "sub",
+        "status"    : "new",
+        "brief"     : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta mi eget tortor sollicitudin fermentum.",
+        "content"   : "<p>Nulla quis velit nisl. Praesent vitae pretium augue. Donec accumsan viverra auctor. Sed tincidunt posuere consequat. Etiam imperdiet, est cursus pellentesque tempus, ipsum odio vestibulum ligula, et gravida metus eros a tellus. Morbi luctus pharetra risus, sit amet dignissim risus euismod et. Duis sodales dolor eu nibh ullamcorper, et volutpat tortor cursus.</p>",
+        "schedule" : {
+            "start" : { "year": 2013, "month": 3, "day": 3 },
+            "end"   : { "year": 2013, "month": 10, "day": 1 },
+            "hours" : 120
+        },
+        "done"      : null,
+        "tasks"     :   [
+                            {
+                                "name"  : "Sed ea nisl gubergren.",
+                                "state" : "doing",
+                                "start" : { "year": 2012, "month":  10, "day": 11 },
+                                "end"   : { "year": 2012, "month":  10, "day": 15 }
+                            },
+
+                            {
+                                "name"  : "albucius lobortis referrentur ne vix.",
+                                "state" : "done",
+                                "start" : { "year": 2012, "month":  10, "day": 12 },
+                                "end"   : { "year": 2012, "month":  10, "day": 22 }
+                            },
+
+                            {
+                                "name"  : "Sed ea nisl gubergren.",
+                                "state" : "doing",
+                                "start" : { "year": 2012, "month":  10, "day": 15 },
+                                "end"   : { "year": 2012, "month":  10, "day": 24 }
+                            },
+
+                            {
+                                "name"  : "albucius lobortis referrentur ne vix.",
+                                "state" : "new",
+                                "start" : { "year": 2012, "month":  10, "day": 20 },
+                                "end"   : { "year": 2012, "month":  11, "day":  2 }
+                            }
+                        ],
+
+    "relationship" : [3]
+
+    }
+
+]
+
+

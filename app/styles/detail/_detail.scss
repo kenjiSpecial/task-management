@@ -1,0 +1,125 @@
+#detail-wrapper {
+
+	width  : 100%;
+
+    #detail-header {
+      position: relative;
+      margin-bottom: 40px;
+      margin-top: -20px;
+
+      .back {
+        position: absolute;
+        top:  20px;
+        left: 40px;
+        cursor: pointer;
+        z-index: 100;
+        color: #7f8c8d;
+
+        &:hover{
+          color: #333;
+        }
+      }
+
+    }
+
+	#detail-head {
+
+		#detail-cover {
+			position: absolute;
+			width: 100%;
+			height: 200px;
+			background: #ffff00;
+		}
+
+		height: 300px;
+		.head-content{
+			width: 100%;
+			margin: auto;
+		}
+
+	}
+
+	.detail-header-content {
+		position: relative;
+		width: 100%;
+		height: 300px;
+
+		#detail-head{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+
+		#cover{
+			position: absolute;
+			background: rgba(255, 255, 255, 0.6);
+			width: 100%;
+			height: 100%;	
+		}
+		
+		.content {
+			position: absolute;;
+			top: 50px;
+            left: 2.5%;
+			width: 95%;
+
+			.content-wrapper{
+				width  : 100%;
+				margin : auto;
+
+				h1 {
+					margin-bottom: 20px;
+				}
+			}
+		}
+	}
+
+	.detail-content{
+		margin: auto;
+		width: 100%;
+
+        .col-md-4 {
+          margin-bottom: 40px;
+        }
+
+		h5 {
+			margin-top: 0;
+		}
+
+		.graph-circle {
+
+          fill: rgba(41, 128, 185, 0.5);
+
+        }
+
+        li {
+        	margin: 0;
+
+        	label {
+        		margin: 0;
+        	}
+
+            .checkbox {
+              margin: 0;
+            }
+
+        }
+
+        ul{
+        	margin-bottom: 20px;
+        }
+
+        form{
+        	input.col-md-12{
+        		margin-bottom: 10px;
+        	}
+
+        	button.btn{
+        		float: right;
+        	}
+        }
+		
+	}
+
+
+}

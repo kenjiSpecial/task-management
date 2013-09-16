@@ -1,0 +1,110 @@
+<div id="listTextContent">
+	<div id="listTextWrapper" class="container">
+<%
+
+	for( var i = collection.length ; i > 0 ; i-- ){
+		var thumbnailURL, projectName, projectContent, tasks, projectStatus;
+
+		if(collection[ i - 1 ].thumbnail.small){
+			thumbnailURL = collection[ i - 1 ].thumbnail.small;
+		}else{
+			thumbnailURL = 'null_small.jpg';
+		}
+
+		projectName    = collection[ i - 1 ].name;
+		projectContent = collection[ i - 1 ].content;
+		projectStatus  = collection[i - 1].status;
+	
+		tasks     = collection[ i - 1 ].tasks;
+
+%>
+		<div class="section-wrapper">
+		
+			<div class="col-md-4">
+			 	<div class="thumbnail">
+			 		<img src="images/<%= thumbnailURL %>" alt="">
+			 	</div>
+			 </div>
+
+			 <div class="col-md-4">
+			 	<h4 class="projectName">
+			 		<%= projectName %>
+			 	</h4>
+
+			 	<div class="contetn">
+			 		<%= projectContent %>
+			 	</div>
+			 </div>
+
+			 <div class="col-md-4 list-right">
+			 <ul class="list list-unstyled">
+            <li>Task:</li>
+<%
+    
+    var task_count;
+    if(tasks == null){
+        task_count = 0;
+    } else {
+        task_count = tasks.length;
+    }
+    
+
+    if( task_count == 0 ){
+%>
+                <li>Nothing</li>
+<%
+    } else if ( task_count > 3 ) {
+        for(var j = 0; j < 3; j++){
+            var num = task_count - 1 - j;
+%>
+                 <li>
+                     <div class="checkbox">
+                         <label>
+                             <input type="checkbox" value="">
+                             <%= tasks[num].name %>
+                         </label>
+                     </div>
+                 </li>
+ <%
+         }
+     }else{
+         for( var j = task_count - 1; j > -1; j -- ) {
+
+ %>
+                 <li>
+                     <div class="checkbox">
+                         <label>
+                             <input type="checkbox" value="">
+                             <%= tasks[num].name %>
+                         </label>
+                     </div>
+                 </li>
+<%
+
+        }
+    }
+    
+%>
+        		</ul>
+        		<p class='content-btn'>
+        			<% if(projectStatus != 'done'){ %> 
+		            <a class= "btn btn-info" href="#">
+		                start Project
+		            </a>
+		            <% } %>
+
+
+		            <a class= "btn" href="#">
+		                More Detail
+		            </a>
+
+		        </p>
+
+			 </div>
+
+		</div>
+<%		
+	}
+%>
+	</div>
+</div>

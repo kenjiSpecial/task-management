@@ -1,0 +1,120 @@
+<% 
+	console.log(model);
+	var projectName   = model.name;
+	var projectType   = model.type;
+	var projectStatus = model.status;
+	var content       = model.content;
+	var schedule      = model.schedule;
+	var done 		  = model.done;
+	var task          = model.tasks;
+
+%>
+
+
+	<!-- <div class="hero-unit" id='detail-head'> -->
+
+		<!-- <div id="detail-cover"></div> -->
+
+		<!-- <div class="head-content"> -->
+			
+		<!-- </div> -->
+
+	<!-- </div> -->
+<div class="row" id="detail-header">
+    <div class="col-md-12">
+        <div class="back"><span class="glyphicon glyphicon-remove"></span></div>
+        <div class="detail-header-content">
+            <div id="detail-head"></div>
+            <div id="cover"></div>
+            <div class="content">
+                <div class="content-wrapper">
+                    <h1><%= projectName %></h1>
+                    <div>
+                        <%= content %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row detail-content">
+	<div class="col-md-4" id="first-content">
+
+        <p class="schedule">Schedule: <%= model.schedule.start.year %>. <%= model.schedule.start.month %>. <%= model.schedule.start.day %> -
+            <%= model.schedule.end.year %>. <%= model.schedule.end.month %> .<%= model.schedule.end.day %>
+        </p>
+
+        <p class="state">State:
+            <% if ( model.done == null ){ %>
+                Null
+            <% }else{ %>
+                <%= model.done.start.year %>. <%= model.done.start.month %>. <%= model.done.start.day %> -
+                <% if( model.done.end == null ) { %>
+                        DOING
+                <% }else{ %>
+            <%= model.done.end.year %>. <%= model.done.end.month %>. <%= model.done.end.day %>
+                <% } %>
+
+            <% }%>
+        </p>
+
+        <p>
+        	Wiki:
+        </p>
+
+        <p class="wiki-content">
+        	
+        </p>
+		
+	</div>
+	
+	<div class="col-md-4" id="second-content">
+		<h5>Progress</h5>
+		<div id="progress-chart"></div>
+
+	</div>
+
+	<div class="col-md-4" id="third-content">
+        <h5>Task:</h5>
+		<ul class="list-unstyled" id="task-list">
+            <%
+                var tasks = model.tasks;
+                
+                var task_count;
+                if(tasks == null){
+                    task_count = 0;
+                } else {
+                    task_count = tasks.length;
+                }
+                 
+
+
+                if( task_count == 0 ){
+            %>
+                <li>Nothing</li>
+            <%
+                } else if ( task_count > 0 ) {
+                    for(var i = 0; i < task_count; i++){
+                        var num = task_count - 1 - i;
+            %>
+                <li>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="">
+                            <%= tasks[num].name %>
+                        </label>
+                    </div>
+                </li>
+            <%
+                    }
+                }
+            %>
+        </ul>
+        <h5 id='new-task'>New Task</h5>
+        <form class="navbar-form pull-left">
+		  <input type="text" class="col-md-12" id='new-task-content' placeholder="New Task">
+		  <button type="submit" class="btn">create</button>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,20 @@
+#login-wrapper{
+  display: none;
+  .form-signin {
+
+    max-width: 330px;
+    padding: 15px;
+    margin: 120px auto;
+
+    h4{
+      margin-bottom: 20px;
+    }
+  }
+
+  &.hide {
+    position: absolute;
+    opacity: 0.6;
+    z-index: 100;
+  }
+
+}

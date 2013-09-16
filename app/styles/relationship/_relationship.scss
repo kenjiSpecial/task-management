@@ -1,0 +1,26 @@
+#relationship-container{
+  margin: 0;
+  padding: 0;
+  display: none;
+  // d3
+
+  .link {
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
+
+  .node {
+    cursor: move;
+    fill: rgba(200, 200, 200, 0.8);
+  }
+
+  .node text {
+    fill: rgb( 0, 0, 0);
+    //color: #ff0000;
+  }
+
+  .node.fixed {
+    fill: #f00;
+  }
+
+}

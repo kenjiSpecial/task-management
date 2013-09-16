@@ -1,0 +1,110 @@
+<div class="project-content" id = "list_<%= model.id %>">
+    <div class="span8">
+        <div class="project-image">
+            <%
+                var thumbnailName;
+                if(model.thumbnail.small){
+
+                    thumbnailName = model.thumbnail.small;
+
+                }else{
+                    
+                    thumbnailName = 'null_small.jpg';
+
+                }
+
+             %>
+            <img src="images/<%= thumbnailName %>" alt=""/>
+
+            
+            
+        </div>
+    </div>
+
+    <div class="span4 project-list">
+        <h3 class="name"><%= model.name %></h3>
+
+        <p class="schedule">Schedule: <%= model.schedule.start.year %>. <%= model.schedule.start.month %>. <%= model.schedule.start.day %> -
+            <%= model.schedule.end.year %>. <%= model.schedule.end.month %> .<%= model.schedule.end.day %>
+        </p>
+
+        <p class="state">State:
+            <% if ( model.done == null ){ %>
+                Null
+            <% }else{ %>
+                <%= model.done.start.year %>. <%= model.done.start.month %>. <%= model.done.start.day %> -
+                <% if( model.done.end == null ) { %>
+                        DOING
+                <% }else{ %>
+            <%= model.done.end.year %>. <%= model.done.end.month %>. <%= model.done.end.day %>
+                <% } %>
+
+            <% }%>
+        </p>
+
+        <p class="brief">
+            <%= model.brief %>
+        </p>
+
+        <ul class="list unstyled">
+            <li>Task:</li>
+            <%
+
+                var tasks = model.tasks;
+                
+                var task_count;
+                if(tasks == null){
+                    task_count = 0;
+                } else {
+                    task_count = tasks.length;
+                }
+                 
+
+
+                if( task_count == 0 ){
+            %>
+                <li>Nothing</li>
+            <%
+                } else if ( task_count > 3 ) {
+                    for(var i = 0; i < 3; i++){
+                        var num = task_count - 1 - i;
+            %>
+                <li>
+                    <form class="form-inline">
+                        <label class="checkbox"><input type="checkbox"><%= tasks[num].name %></label>
+                    </form>
+                </li>
+            <%
+                    }
+                }else{
+                    for( var i = task_count - 1; i > -1; i -- ) {
+
+            %>
+                <li>
+                    <form class="form-inline">
+                        <label class="checkbox"><input type="checkbox"><%= tasks[i].name %></label>
+                    </form>
+                </li>
+            <%
+
+                    }
+                }
+                
+            %>
+        </ul>
+
+        <p class='content_btn'>
+            <a class= "btn" href="#">
+                More Detail
+            </a>
+        </p>
+
+        <p class='content_btn'>
+            <a class= "btn btn-info" href="#">
+                start Project
+            </a>
+        </p>
+
+    </div>
+</div>
+

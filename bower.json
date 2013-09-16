@@ -1,0 +1,18 @@
+{
+  "name": "new",
+  "version": "0.0.0",
+  "dependencies": {
+    "sass-bootstrap": "latest",
+    "jquery": "~1.9.0",
+    "underscore": "~1.4.3",
+    "backbone": "~1.0.0",
+    "requirejs": "~2.1.5",
+    "requirejs-text": "~2.0.5",
+    "modernizr": "~2.6.2",
+    "d3": "~3.2.8",
+    "text": "~2.0.10",
+    "jquery-backstretch": "~2.0.4",
+    "gl-date-picker" : "https://github.com/glad/glDatePicker.git"
+  },
+  "devDependencies": {}
+}

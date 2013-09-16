@@ -1,0 +1,25 @@
+$iconSpritePath: '/images/glyphicons-halflings.png';
+@import 'sass-bootstrap/lib/bootstrap';
+
+$homeWidth: 1024px;
+
+// common css
+
+.container {
+  font-family: 'Open Sans', sans-serif;
+
+  #mainContent {
+
+  }
+}
+
+
+
+@import "nav/nav";
+
+@import "login/login";
+
+@import "home/time";
+@import "detail/detail";
+@import "relationship/relationship";
+@import "register/register";

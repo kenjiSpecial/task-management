@@ -1,0 +1,47 @@
+<div id="imgListContent" class="container">
+<%
+	for( var i = collection.length ; i > 0 ; i-- ){
+		var thumbnailURL, projectName, projectBrief, projectStatus;
+
+		if(collection[ i - 1 ].thumbnail.small){
+			thumbnailURL = collection[ i - 1 ].thumbnail.small;
+		}else{
+			thumbnailURL = 'null_small.jpg';
+		}
+
+		projectName   = collection[i - 1].name;
+		projectBrief  = collection[i - 1].brief;
+		projectStatus = collection[i - 1].status;
+		
+%>
+	 <div class="col-md-4">
+	 	<div class="thumbnail">
+	 		<img src="images/<%= thumbnailURL %>" alt="">
+	 	</div>
+		<div class="des">
+			<h4 class="projectName"><%= projectName %></h4>
+			<p class="brief"><%= projectBrief %></p>
+
+
+			<p class='content_btn'>
+				
+				<% if(projectStatus != 'done'){ %> 
+				<a class= "btn btn-info" href="#">
+	                start Project
+	            </a>
+	            <% } %>
+
+	            <a class= "btn" href="#">
+	                More Detail
+	            </a>
+
+	        </p>
+
+
+		</div>
+
+	 </div>
+<%		
+	}
+ %>
+ </div>
