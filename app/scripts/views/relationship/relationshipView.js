@@ -4,12 +4,12 @@ define([
     'd3',
     'collection/projectModelCollection',
 
-    'views/relationship/sub/relationshipD3View',
-    'views/relationship/sub/relationshipListView',
+    'views/relationship/graph/relationshipGraphView',
+    'views/relationship/list/listView',
 
-    'text!../../../templates/relationship/relationshipTemplate.html'
+    'text!../../../../templates/relationship/relationshipTemplate.html'
 
-], function ( Backbone, _d3, projectModelCollection, RelationshipD3View, RelationshipListView, relationshipTemplate ) {
+], function ( Backbone, _d3, projectModelCollection, RelationshipGraphView, RelationshipListView, relationshipTemplate ) {
 
     var RelationshipView = Backbone.View.extend({
 
@@ -17,13 +17,13 @@ define([
 
         initialize : function () {
             this.$el.html( relationshipTemplate );
-            this.relationshipD3View   = new RelationshipD3View();
+            this.relationshipGraphView   = new RelationshipGraphView();
             this.relationshipListView = new RelationshipListView();
         },
 
         render     : function ( ) {
-            this.relationshipD3View.render();
-
+            this.relationshipGraphView.render();
+            this.relationshipListView.render();
         },
 
         show      : function( ) {

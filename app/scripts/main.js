@@ -18,10 +18,7 @@ require.config({
             exports: 'jquery'
         },
 
-        datePicker: {
-            deps: ['jquery'],
-            exports: 'jquery'
-        }
+        datePicker: ["jquery"]
     },
     paths: {
         jquery: '../bower_components/jquery/jquery',
@@ -29,7 +26,7 @@ require.config({
         underscore: '../bower_components/underscore/underscore',
         bootstrap: 'vendor/bootstrap',
         text: '../bower_components/requirejs-text/text',
-        d3: '../bower_components/d3/d3.min',
+        d3: '../bower_components/d3/d3',
         datePicker: '../bower_components/gl-date-picker/glDatePicker'
     }
 });
@@ -58,7 +55,7 @@ require([
     'views/relationship/relationshipView',
 
     'helper/events',
-    'helper/loadHelper',
+    'helper/loadHelper'
 
     //'../bower_components/sass-bootstrap/assets/js/holder'
 

@@ -1,7 +1,76 @@
 #relationship-container{
   margin: 0;
   padding: 0;
+  width: 100%;
+  max-width: 100%;
   display: none;
+
+  #relationship-graph {
+    position: relative;
+
+    #relationship-d3 {
+      position: absolute;
+    }
+
+    // -------------
+
+    #relationship-list {
+      position: absolute;
+      width: 100%;
+
+      .container{
+        max-width: 100%;
+      }
+
+      #relationship-sub-list {
+
+        .list-group{
+          @include transition-property(all);
+          @include transition-duration(1s);
+          .list-group-item{
+            @include transition-property(all);
+            @include transition-duration(.4s);
+
+            &.hover {
+              background: #bce8f1;
+              color: #3a87ad;
+            }
+
+            &:hover{
+              cursor: pointer;
+            }
+          }
+        }
+
+        //  ---------------
+
+        .relationshipContent {
+          width: 0;
+          opacity: 0;
+
+          @include transition-property(all);
+          @include transition-duration(1s);
+
+          //display: none;
+
+          &.none-vis {
+
+          }
+
+          &.selected {
+            width: 16.66667%;
+            opacity: 1;
+            //display: block;
+
+          }
+        }
+
+
+      }
+    }
+
+  }
+
   // d3
 
   .link {
@@ -20,7 +89,13 @@
   }
 
   .node.fixed {
-    fill: #f00;
+    fill: rgba(200, 0, 0, 0.6);
   }
+
+  .node.selected{
+    fill: rgba(188,232,241, 0.6);
+  }
+
+
 
 }

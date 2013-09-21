@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row" id="relationship-sub-list">
+
+        <ul class="list-group col-md-2 col-md-offset-10">
+
+        <%
+        for( var i = collection.length ; i > 0 ; i-- ){
+            var collectionName = collection[i - 1].name;
+        %>
+
+            <li class="list-group-item" list-id="<%= (i - 1) %>">
+                <%= collectionName %>
+            </li>
+        <%
+        }
+        %>
+
+        </ul>
+
+
+        <div class="col-md-2 relationshipContent none-vis" >
+
+        </div>
+
+    </div>
+
+
+</div>

@@ -1,16 +1,14 @@
 define([
-    'backbone',
 
-    'collection/projectModelCollection'
+    'backbone'
 
-    //'text!../../../templates/register/Template.html'
-], function ( Backbone /*, Template*/ ) {
+], function ( Backbone ) {
 
-    var RelationshipListView = Backbone.View.extend({
+    var ListView = Backbone.View.extend({
 
-        el         : $('#relationship-list'),
+        el       : $('#register-container'),
 
-        initialize : function () {
+        initialize: function () {
 
         },
 
@@ -20,6 +18,7 @@ define([
                 this.$el.show();
             }
 
+
         },
 
         hide       : function( ){
@@ -27,10 +26,9 @@ define([
             if( elDisplay == 'block' || elDisplay == 'inline' ){
                 this.$el.hide();
             }
-
         }
 
     });
 
-    return RelationshipListView;
+    return ListView;
 });
