@@ -1,0 +1,57 @@
+<%
+        // console.log(data);
+
+        var projectName, projectContent;
+
+        projectName    = data.name;
+        projectContent = data.brief;
+
+        var thumbnailName;
+        if(data.thumbnail.small){
+        
+        thumbnailName = data.thumbnail.small;
+        
+        }else{
+        
+        thumbnailName = 'null_small.jpg';
+        
+        }
+%>
+
+<div id="relationship-detail-content" class="invisible-content" >
+    <button type="button" class="close" aria-hidden="true">&times;</button>
+    <h5><%= projectName %></h5>
+
+    <div class="thumbnail"><img src="images/<%= thumbnailName %>" alt=""/></div>
+
+    <p class="schedule">Schedule: <%= data.schedule.start.year %>. <%= data.schedule.start.month %>. <%= data.schedule.start.day %> -
+        <%= data.schedule.end.year %>. <%= data.schedule.end.month %> .<%= data.schedule.end.day %>
+    </p>
+
+    <p class="state">State:
+        <% if ( data.done == null ){ %>
+        Null
+        <% }else{ %>
+        <%= data.done.start.year %>. <%= data.done.start.month %>. <%= data.done.start.day %> -
+        <% if( data.done.end == null ) { %>
+        DOING
+        <% }else{ %>
+        <%= data.done.end.year %>. <%= data.done.end.month %>. <%= data.done.end.day %>
+        <% } %>
+
+        <% }%>
+    </p>
+
+    <p class="content"><%= projectContent %></p>
+    <% if(relationship){ %>
+
+    <p>Relationship:</p>
+    <div class="relation">
+        <% for(var j = 0; j < relationship.length; j++ ){ %>
+            <button type="button" class="btn btn-primary" id-num = "<%= relationship[j].id %>"><%= relationship[j].name %></button>
+        <% } %>
+
+    </div>
+
+    <% } %>
+</div>

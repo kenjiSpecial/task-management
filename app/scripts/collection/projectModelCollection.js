@@ -10,6 +10,8 @@ define([
 
     var projectModelCollection = new ProjectModelCollection();
 
+    window.projectModelCollection = projectModelCollection;
+
     return projectModelCollection;
 
 });

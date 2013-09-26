@@ -41,32 +41,55 @@
             }
           }
         }
-
         //  ---------------
+      }
 
-        .relationshipContent {
-          width: 0;
-          opacity: 0;
+      // -------------
+      // -------------
 
-          @include transition-property(all);
-          @include transition-duration(1s);
+      #relationship-detail-contents{
+        position: absolute;
+        top: 0;
+        right: 2.5%;
 
-          //display: none;
 
-          &.none-vis {
+        #relationship-detail-content{
+
+
+
+
+
+          &.invisible-content {
+
+            opacity: 0 ;
+          }
+
+          &.visible-content {
+            @include transition-property(opacity);
+            @include transition-duration(.5s);
+
+
+            opacity: 1 ;
 
           }
 
-          &.selected {
-            width: 16.66667%;
-            opacity: 1;
-            //display: block;
+          &.close-content {
 
+            @include transition-property(opacity);
+            @include transition-duration( .3s);
+
+            opacity: 0 ;
           }
+
+
         }
 
 
+
       }
+
+
+
     }
 
   }
@@ -99,3 +122,4 @@
 
 
 }
+

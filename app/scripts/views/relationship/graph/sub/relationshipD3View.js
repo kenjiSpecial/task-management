@@ -82,7 +82,7 @@ define([
             this.node.append("image")
                 .attr("xlink:href", function(d){
 
-                    console.log(d.image);
+                    // console.log(d.image);
 
                     if(d.image == null){
                         return "images/null_small.jpg";
@@ -97,8 +97,10 @@ define([
                 .attr("width", 800/5)
                 .attr("height", 450/5)
                 .attr("clip-path", function(d){
+
                     var dName    = "cut-off-bottom" + d.name;
                     var dNameURL = "url(#" + dName + ")";
+
                     return dNameURL;
                 });
 
