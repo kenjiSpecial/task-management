@@ -34,6 +34,7 @@ define([
 
         initialize : function () {
             this.$el = $('#relationship-list');
+            myEvents.on("selectList", _.bind(this.d3SelectList, this));
         },
 
         render     : function () {
@@ -82,7 +83,16 @@ define([
         liClick: function(e){
 
             var $currentTarget = $(e.currentTarget);
+
+            var $list = this.$el.find("li");
+            for(var liNUm = 0; liNUm < $list.length; liNUm++){
+                $list.removeClass("selected");
+            }
+
+            $currentTarget.addClass("selected");
+
             $currentTarget.parent().removeClass("col-md-offset-10").addClass("col-md-offset-7");
+
             var listIdNum = parseInt($currentTarget.attr("list-id"));
 
             var $relationshipContent = this.$el.find("#relationship-detail-contents");
@@ -94,7 +104,6 @@ define([
             var contentData      = this.projectModelCollectionJson[parseInt(listIdNum)];
             var relationshipData = [];
             var item = {};
-
 
 
             for( var i = 0; i < this.projectModelCollectionJson.length ; i++ ) {
@@ -151,6 +160,9 @@ define([
                 this.contentStatus = true;
             }
 
+            // -----------
+
+
 
 
         },
@@ -168,6 +180,11 @@ define([
         },
 
         closeArticle: function(e){
+            var $list = this.$el.find("li");
+            for(var liNUm = 0; liNUm < $list.length; liNUm++){
+                $list.removeClass("selected");
+            }
+
             this.$relationshipDetailContent.removeClass("visible-content").addClass("close-content");
             var $listGroup = this.$el.find(".list-group");
             $listGroup.removeClass("col-md-offset-7").addClass("col-md-offset-10");
@@ -189,7 +206,17 @@ define([
 
             window.currentTarget = e;
             var $currentTarget = $(e.currentTarget);
+
+            var $list = this.$el.find("li");
+            for(var liNUm = 0; liNUm < $list.length; liNUm++){
+                $list.removeClass("selected");
+            }
+
+
             var listIdNum = parseInt($currentTarget.attr("id-num"));
+            $($list[$list.length - listIdNum - 1]).addClass("selected");
+
+
 
 
             var contentData      = this.projectModelCollectionJson[parseInt(listIdNum)];
@@ -233,6 +260,88 @@ define([
             this.$relationshipDetailContent.css("width", parseInt(window.innerWidth * 0.22) );
 
 
+        },
+
+        d3SelectList : function(number){
+            //alert(number);
+
+            var $list = this.$el.find("li");
+            for(var liNUm = 0; liNUm < $list.length; liNUm++){
+                $list.removeClass("selected");
+            }
+
+            var $currentTarget = $($list[$list.length - number - 1]);
+            $currentTarget.addClass("selected");
+            $currentTarget.parent().removeClass("col-md-offset-10").addClass("col-md-offset-7");
+
+            var listIdNum = parseInt($currentTarget.attr("list-id"));
+
+
+
+            var $relationshipContent = this.$el.find("#relationship-detail-contents");
+
+            //$relationshipContent.removeClass("none-vis").addClass("selected");
+
+            // ------
+
+            var contentData      = this.projectModelCollectionJson[parseInt(listIdNum)];
+            var relationshipData = [];
+            var item = {};
+
+
+            for( var i = 0; i < this.projectModelCollectionJson.length ; i++ ) {
+
+                var relationships = this.projectModelCollectionJson[i].relationship;
+
+                if ( relationships ) {
+                    for( var j = 0; j < relationships.length; j++ ){
+
+                        if(listIdNum == relationships[j]){
+
+                            item = {id: i, name: this.projectModelCollectionJson[i].name };
+                            relationshipData.push(item);
+
+                        } else if(listIdNum == i) {
+                            var number = relationships[j];
+                            item = {id: number, name: this.projectModelCollectionJson[number].name };
+
+                            relationshipData.push(item);
+                        }
+
+                    }
+                }
+
+            }
+
+            //console.log(relationshipData);
+
+
+            var compiled = _.template( relationshipDetailListTemplate,  { data: contentData, relationship: relationshipData } );
+            //$("#relationship-detail-content").removeClass("invisible-content")
+            if(this.contentStatus){
+
+                $relationshipContent.html( compiled );
+                //$("#relationship-detail-content").removeClass("invisible-content")
+                this.$relationshipDetailContent = $("#relationship-detail-content");
+                this.$relationshipDetailContent.removeClass("invisible-content").addClass("visible-content");
+                this.$relationshipDetailContent.css("width", parseInt(window.innerWidth * 0.22) );
+
+            }else{
+                console.log(this.contentStatus);
+
+                var $relationshipDetailContent = $("#relationship-detail-content");
+                this.$relationshipDetailContent = $relationshipDetailContent;
+
+                setTimeout(function(){
+                    $relationshipContent.html( compiled );
+                    console.log()
+                    $("#relationship-detail-content").removeClass("invisible-content").addClass("visible-content");
+                    $("#relationship-detail-content").css("width", parseInt(window.innerWidth * 0.22) );
+
+                }, 500);
+
+                this.contentStatus = true;
+            }
 
         }
 

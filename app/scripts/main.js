@@ -153,6 +153,7 @@ require([
         },
 
         initialize: function( ){
+
             if(loginStatus){
                 myEvent.on( "openingLoadDone", _.bind( this.loadDone, this ));
             }
@@ -184,6 +185,8 @@ require([
             imgListView.render();
             mainView.render();
             relationshipView.render();
+
+            navbarView.init( this.page );
 
             switch( this.page ){
                 case 'home':

@@ -45,7 +45,7 @@
     <p class="content"><%= projectContent %></p>
     <% if(relationship){ %>
 
-    <p>Relationship:</p>
+    <p class="relation-title">Relationship:</p>
     <div class="relation">
         <% for(var j = 0; j < relationship.length; j++ ){ %>
             <button type="button" class="btn btn-primary" id-num = "<%= relationship[j].id %>"><%= relationship[j].name %></button>

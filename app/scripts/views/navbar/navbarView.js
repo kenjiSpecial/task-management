@@ -8,11 +8,34 @@ define([
         el       : $('#navbar-section'),
 
         events   : {
-            "click li": 'liClick'
+            "click li": 'liClick',
+            "click .navbar-header": 'headerClick'
         },
 
         initialize: function () {
 
+        },
+
+        init : function( page ){
+            //console.log("navbar:  " + page);
+            switch ( page ) {
+                case "home":
+                    this.$el.find("#nav-home").addClass("active");
+                    break;
+
+                case "register":
+                    this.$el.find("#nav-register").addClass("active");
+                    break;
+
+                case "current":
+                    this.$el.find("#nav-current").addClass("active");
+                    break;
+
+                case "projectRelationship":
+                    this.$el.find("#nav-relationship").addClass("active");
+                    break;
+
+            }
         },
 
         show       : function( ){
@@ -40,6 +63,16 @@ define([
 
             $(event.target.parentNode).addClass("active");
 
+        },
+
+        headerClick  : function(e){
+
+            $( "li" ).each(function() {
+                if( $(this).hasClass( "active" ) ) $(this).removeClass( "active" );
+
+            });
+
+            this.$el.find("#nav-home").addClass("active");
         }
 
     });

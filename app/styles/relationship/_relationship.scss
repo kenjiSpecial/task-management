@@ -36,6 +36,11 @@
               color: #3a87ad;
             }
 
+            &.selected{
+              background: #bce8f1;
+              color: #3a87ad;
+            }
+
             &:hover{
               cursor: pointer;
             }
@@ -55,9 +60,13 @@
 
         #relationship-detail-content{
 
+          .thumbnail {
+            margin-bottom: 20px;
+          }
 
-
-
+          .relation-title {
+            margin-top: 20px;
+          }
 
           &.invisible-content {
 

@@ -35,9 +35,9 @@ define([
             this.height = height;
 
 
-            this.svg   = d3.select("#relationship-d3").append('svg').attr( 'width', width ).attr( 'height', height );
+            this.svg   = d3.select("#relationship-d3").append('svg').attr( 'width', width ).attr( 'height', height ).attr( 'id', "graph" );
             this.force = d3.layout.force().gravity(.01).charge(-300).linkDistance(200).size([width, height]).on("tick", _.bind(this.tick, this));
-            this.drag  = this.force.drag().on( "dragstart", dragstartFunction);
+            this.drag  = this.force.drag().on( "dragstart", _.bind(this.dragstartFunction, this));
 
 
             this.nodes = [];
@@ -119,10 +119,34 @@ define([
 
             function dragstartFunction( d ) {
 
+
+
                 d.fixStatus = !d.fixStatus;
                 d3.select(this).classed("fixed", d.fixStatus);
 
             }
+        },
+
+        dragstartFunction : function(d){
+            console.log(d);
+            var number = d.index;
+            var svg = d3.select("svg#graph").selectAll("g");
+
+            var select = "#node-" + number;
+
+            var d3Select = d3.select( select );
+            d3Select.classed("selected", true);
+            //d3Select.transition().attr("transform", "translate(" + this.width/2 + "," + this.height/2  +")");
+            d3Select.selectAll("circle").transition().attr("r", 40);
+
+            setTimeout(function(){
+                d3Select.classed("selected", false);
+                d3Select.selectAll("circle").transition().attr("r", 30);
+            }, 1200);
+
+            // ---------
+            myEvent.trigger("selectList", number);
+
         },
 
 
@@ -162,22 +186,21 @@ define([
 
 
             this.nodes.forEach(function(target) {
+                var select = "#node-" + target.index;
+                var d3Select = d3.select( select );
+
                 if(target.index == msg){
-                    //console.log("target is" + msg);
 
-                    var select = "#node-" + msg;
-
-                    var d3Select = d3.select( select );
                     d3Select.classed("selected", true);
-                    //d3Select.transition().attr("transform", "translate(" + this.width/2 + "," + this.height/2  +")");
                     d3Select.selectAll("circle").transition().attr("r", 40);
 
-                    // target.x = winWd / 2;
-                    // target.y = winHg / 2;
-
                 }else{
+                    d3Select.classed("selected", false);
+                    d3Select.selectAll("circle").transition().attr("r", 30);
+
                     target.x += (Math.random() - .5) * 25;
                     target.y += (Math.random() - .5) * 25;
+
                 }
 
 
@@ -189,17 +212,15 @@ define([
 
         mouseLeave : function(msg){
             this.nodes.forEach(function(target) {
+
+                var select = "#node-" + target.index;
+                var d3Select = d3.select( select );
+
                 if(target.index == msg){
-                    //console.log("target is" + msg);
 
-                    var select = "#node-" + msg;
-
-                    var d3Select = d3.select( select );
 
                     d3Select.classed("selected", false);
                     d3Select.selectAll("circle").transition().attr("r", 30);
-
-
 
                 }
             });
