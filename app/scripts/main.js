@@ -18,7 +18,8 @@ require.config({
             exports: 'jquery'
         },
 
-        datePicker: ["jquery"]
+        datePicker : ["jquery"],
+        jqueryBackStretch : ["jquery"]
     },
     paths: {
         jquery: '../bower_components/jquery/jquery',
@@ -27,7 +28,8 @@ require.config({
         bootstrap: 'vendor/bootstrap',
         text: '../bower_components/requirejs-text/text',
         d3: '../bower_components/d3/d3',
-        datePicker: '../bower_components/gl-date-picker/glDatePicker'
+        datePicker: '../bower_components/gl-date-picker/glDatePicker',
+        jqueryBackStretch : '../bower_components/jquery-backstretch/jquery.backstretch'
     }
 });
 
@@ -54,12 +56,14 @@ require([
 
     'views/relationship/relationshipView',
 
+    'views/current/currentView',
+
     'helper/events',
     'helper/loadHelper'
 
     //'../bower_components/sass-bootstrap/assets/js/holder'
 
-], function ( Backbone, userModel, projectModelCollection, NavbarView, LoginView, MainView, ImgListView, ImgTextListView, HomeNavView, DetailView, RegisterView, RelationshipView, myEvent, loadHelper ) {
+], function ( Backbone, userModel, projectModelCollection, NavbarView, LoginView, MainView, ImgListView, ImgTextListView, HomeNavView, DetailView, RegisterView, RelationshipView, CurrentView, myEvent, loadHelper ) {
     var loadStatuses     = [ 'notLoading', 'loading', 'loadDone' ];
     var loadState        = loadStatuses[ 0 ];
 
@@ -79,6 +83,8 @@ require([
     var registerView     = new RegisterView();
 
     var relationshipView = new RelationshipView();
+
+    var currentView      = new CurrentView();
 
     /** -------------- **/
 
@@ -145,7 +151,7 @@ require([
         routes: {
             'register'      : 'registerProject',
             'relationship'  : 'projectRelationship',
-            'current'       : 'currentProject',
+            'current'       : 'current',
             'home/:query'   : 'home',
             'detail/:query' : 'detail',
             // Default
@@ -185,6 +191,8 @@ require([
             imgListView.render();
             mainView.render();
             relationshipView.render();
+            currentView.render();
+
 
             navbarView.init( this.page );
 
@@ -211,6 +219,10 @@ require([
 
                     this.projectRelationship();
 
+                    break;
+
+                case "current":
+                    this.current();
                     break;
             }
         },
@@ -243,7 +255,6 @@ require([
             if ( loginStatus ) {
                 if( loadHelper.loadStatus ) {
 
-
                     relationshipView.show();
 
                     this.hideView();
@@ -257,11 +268,25 @@ require([
 
         },
 
-        currentProject: function(){
-            // renderView()
-            // alert('currentProject');
+        current: function(){
 
+            this.page = "current";
 
+            if(loginStatus){
+
+                if(loadHelper.loadStatus){
+
+                    currentView.show();
+
+                    this.hideView();
+
+                    prevPageStatus = "current";
+
+                }
+
+            }else{
+                this.login();
+            }
 
         },
 
@@ -358,6 +383,9 @@ require([
                         break;
                     case 'projectRelationship':
                         relationshipView.hide();
+                        break;
+                    case 'current':
+                        currentView.hide();
                         break;
 
                 }

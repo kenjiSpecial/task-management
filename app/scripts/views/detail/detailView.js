@@ -1,12 +1,14 @@
 define([
+
     'jquery',
     'backbone',
     'collection/projectModelCollection',
     'helper/events',
     'text!../../../templates/detail/detailViewTemplate.html',
 
-    '../../../bower_components/jquery-backstretch/jquery.backstretch.min'
-], function ( $, Backbone, projectModelCollection, myEvent, detailViewTemplate ) {
+    'jqueryBackStretch'
+
+], function ( $, Backbone, projectModelCollection, myEvent, detailViewTemplate, _jqueryBackStretch ) {
 
 	var DetailView = Backbone.View.extend({
 		el        : $('#detail-wrapper'),

@@ -115,7 +115,7 @@
     {
         "id"        : 3,
         "name"      : "case04",
-        "thumbnail" : { "small": "sample03_small.jpg" },
+        "thumbnail" : { "small": "sample03_small.jpg", "background" :  "sample03_small.jpg"},
         "type"      : "main",
         "status"    : "doing",
         "brief"     : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porta mi eget tortor sollicitudin fermentum.",

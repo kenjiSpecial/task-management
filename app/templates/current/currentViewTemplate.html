@@ -1,0 +1,42 @@
+<section id="current-wrapper">
+
+<%
+        for(var i = 0; i < collection.length; i++){
+
+            var model = collection[i];
+
+            var projectName   = model.name;
+            var projectType   = model.type;
+            var projectStatus = model.status;
+            var content       = model.content;
+            var schedule      = model.schedule;
+            var done 		  = model.done;
+            var task          = model.tasks;
+
+%>
+
+
+    <section class="current-project-wrapper row" id="project-<%= i %>">
+        <section class="current-project-background" id="project-bg-<%= i %>">
+        </section>
+
+        <section class="current-project-container">
+            <div class="current-project-row">
+                <h1><%= projectName %></h1>
+                <div>
+                    <%= content %>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+
+<%
+
+        }
+
+%>
+
+
+</section>
