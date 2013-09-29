@@ -92,13 +92,17 @@ require([
 
 
     var homeViewState = false;
-    var loginStatus   = false;
 
-    var CLIENT_ID = '76795648038-2c56fd0bff98dverpdprhbbjf8m5uflt.apps.googleusercontent.com';
-    var SCOPES = 'https://www.googleapis.com/auth/drive';
+    // var CLIENT_ID = '76795648038-2c56fd0bff98dverpdprhbbjf8m5uflt.apps.googleusercontent.com';
+    // var SCOPES = 'https://www.googleapis.com/auth/drive';
+
+    var APP_ID = "7XMOsP7DvvTF3EbAaXj43FSZHAjv2Zl9YSz5N99b";
+    var JS_KEY = "ja43CiuOaMm5hwCp0iPb7EXquKYbsTdK3Wfsj8qk";
 
 
     setTimeout(handleClientLoad, 10);
+
+    /** login **/
 
     function handleClientLoad ( ) {
 
@@ -106,9 +110,9 @@ require([
         gapi.auth.authorize(
             {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': true},
             handleAuthResult);
-         */
+        */
 
-        loginStatus = true;
+        //loginStatus = true;
         init();
 
 
@@ -116,9 +120,9 @@ require([
 
     function handleAuthResult(authResult) {
         if (authResult && !authResult.error) {
-            loginStatus = true;
+            //loginStatus = true;
         } else {
-            loginStatus = false;
+            //loginStatus = false;
         }
 
         init();
@@ -126,9 +130,9 @@ require([
 
     myEvent.on("loginBtClick", function(){
 
-        gapi.auth.authorize(
-            {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': true},
-            handleAuthResult2);
+//        gapi.auth.authorize(
+//            {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': true},
+//            handleAuthResult2);
 
     });
 
@@ -136,7 +140,7 @@ require([
 
         if (authResult && !authResult.error) {
 
-            loginStatus = true;
+            // loginStatus = true;
 
             loginView.hide();
             navbarView.show();
@@ -160,7 +164,7 @@ require([
 
         initialize: function( ){
 
-            if(loginStatus){
+            if(Parse.User.current()){
                 myEvent.on( "openingLoadDone", _.bind( this.loadDone, this ));
             }
 
@@ -234,7 +238,7 @@ require([
         registerProject: function(){
             this.page = 'register';
 
-            if ( loginStatus ) {
+            if ( Parse.User.current()) {
                 if( loadHelper.loadStatus ) {
 
                     registerView.show();
@@ -252,7 +256,7 @@ require([
 
             this.page = "projectRelationship";
 
-            if ( loginStatus ) {
+            if ( Parse.User.current()) {
                 if( loadHelper.loadStatus ) {
 
                     relationshipView.show();
@@ -272,7 +276,7 @@ require([
 
             this.page = "current";
 
-            if(loginStatus){
+            if( Parse.User.current() ){
 
                 if(loadHelper.loadStatus){
 
@@ -294,9 +298,9 @@ require([
             this.page = 'home';
             this.query = query;
 
-            console.log('loginStatus: '+ loginStatus + ", loadHelper.loadStatus: " + loadHelper.loadStatus);
+            //console.log('loginStatus: '+ loginStatus + ", loadHelper.loadStatus: " + loadHelper.loadStatus);
 
-            if(loginStatus){
+            if(Parse.User.current()){
                 if( loadHelper.loadStatus ){
 
                     switch (query){
@@ -344,7 +348,7 @@ require([
             this.page = 'detail';
             this.query = query;
 
-            if(loginStatus) {
+            if(Parse.User.current()) {
 
                 if( loadHelper.loadStatus ) {
 
@@ -412,7 +416,7 @@ require([
     var appRouter;
 
     function init( ) {
-
+        Parse.initialize("7XMOsP7DvvTF3EbAaXj43FSZHAjv2Zl9YSz5N99b", "ja43CiuOaMm5hwCp0iPb7EXquKYbsTdK3Wfsj8qk");
         appRouter = new AppRouter;
         Backbone.history.start();
 

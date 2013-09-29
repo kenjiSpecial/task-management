@@ -1,14 +1,19 @@
 #login-wrapper{
   display: none;
-  .form-signin {
+  .form-login {
 
     max-width: 330px;
     padding: 15px;
     margin: 120px auto;
 
-    h4{
+    h2{
       margin-bottom: 20px;
     }
+
+    input{
+      margin-bottom: 15px;
+    }
+
   }
 
   &.hide {

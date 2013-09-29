@@ -20,7 +20,8 @@
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
-    <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+
+    <script src="http://www.parsecdn.com/js/parse-1.2.12.min.js"></script>
     <script type="text/javascript" src="bower_components/sass-bootstrap/assets/js/holder.js"></script>
 </head>
 <body>
@@ -50,14 +51,25 @@
         </div>
     </div>
 
+
+
+    <!-- login -->
     <section id="login-wrapper" class="container">
-        <form class="form-signin">
-            <h4 class="form-signin-heading">Please log in to Google Drive</h4>
+
+        <form class="form-login">
+            <h2>Log in</h2>
+            <input type="text" class="form-control" placeholder="Email address" autofocus id="user">
+            <input type="password" class="form-control" placeholder="Password" id="password">
             <button class="btn btn-lg btn-primary btn-block" id="log-in-bt">Log in</button>
         </form>
-    </section>
 
+        <div class="error"></div>
+    </section>
+    <!-- login -->
+
+    <!-- detail -->
     <section id="detail-wrapper" class="container"></section>
+    <!-- detail -->
 
     <!-- home -->
     <section id="home-wrapper">

@@ -36,7 +36,21 @@ define([
 
         login      : function( event ) {
             // log in to google
-            myEvent.trigger('loginBtClick');
+            //myEvent.trigger('loginBtClick');
+            var userName     = this.$el.find("#user").val();
+            var passWordName = this.$el.find("#password").val();
+            var $self = this.$el;
+
+            Parse.User.logIn(userName, passWordName, {
+                success: function(user) {
+                    alert("loginSuccess");
+                    myEvent.trigger("loginSuccess");
+                },
+
+                error: function(user, error) {
+                    $self.find(".error").html("Invalid username or password. Please try again.").show();
+                }
+            });
 
             event.preventDefault();
         }
