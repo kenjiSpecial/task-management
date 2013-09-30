@@ -105,30 +105,42 @@ define([
         taskRegister : function ( event ){
             // check if the value is empty or not.
             var $inputNameText      = $("#inputName");
+            var inputNameText       = $inputNameText.val();
             var $formName           = $(".row-name");
 
+            var typeValue           = this.$el.find("#register-type").val();
+            // console.log(typeValue);
+
+
             var $inputHourText      = $("#inputHour");
+            var inputHourText       = $inputHourText.val();
             var $formHour           = $(".row-hours");
 
             var $inputStartDateText = $("#start-date");
+            var inputStartDateText  = $inputStartDateText.val();
             var $formStartDate      = $(".row-start-hour");
 
             var $inputEndDateText   = $("#end-date");
+            var inputEndDateText    = $inputEndDateText.val();
             var $formEndDate        = $(".row-end-hour");
 
             var $inputBriefText     = $("#input-brief");
+            var inputBriefText      = $inputBriefText.val();
             var $formBrief          = $(".row-brief");
 
             var $inputContentText   = $("#input-content");
+            var inputContentText    = $inputContentText.val();
             var $formContent        = $(".row-content");
 
 
             var missedText    = false;
             var $errorUl      = $("#error-ul");
 
+            // this.testSaveParse();
+
             $errorUl.html("");
 
-            if( !$inputNameText.val() ) {
+            if( !inputNameText ) {
                $errorUl.append( "<li class='text-danger'>Project Name is missed</li>" );
                $formName.addClass("has-error");
 
@@ -137,7 +149,7 @@ define([
                 if($formName.hasClass("has-error")) $formName.removeClass("has-error");
             }
 
-            if( !$inputHourText.val() ) {
+            if( !inputHourText ) {
                 $errorUl.append( "<li class='text-danger'>Hours is missed</li>" );
                 $inputHourText.addClass("has-error");
 
@@ -146,7 +158,7 @@ define([
                 if($formHour.hasClass("has-error")) $formHour.removeClass("has-error");
             }
 
-            if( !$inputStartDateText.val() ) {
+            if( !inputStartDateText ) {
                 $errorUl.append( "<li class='text-danger'>Start Date is missed</li>" );
                 $formStartDate.addClass("has-error");
 
@@ -155,7 +167,7 @@ define([
                 if($formStartDate.hasClass("has-error")) $formStartDate.removeClass("has-error");
             }
 
-            if( !$inputEndDateText.val() ) {
+            if( !inputEndDateText ) {
                 $errorUl.append( "<li class='text-danger'>End Date is missed</li>" );
                 $formEndDate.addClass("has-error");
 
@@ -164,7 +176,7 @@ define([
                 if($formEndDate.hasClass("has-error")) $formEndDate.removeClass("has-error");
             }
 
-            if( !$inputBriefText.val() ) {
+            if( !inputBriefText ) {
                 $errorUl.append( "<li class='text-danger'>Brief text is missed</li>" );
                 $formBrief.addClass("has-error");
 
@@ -173,7 +185,7 @@ define([
                 if( $formBrief.hasClass("has-error") ) $formBrief.removeClass("has-error");
             }
 
-            if( !$inputContentText.val() ) {
+            if( !inputContentText ) {
                 $errorUl.append( "<li class='text-danger'>Content text is missed</li>" );
                 $formContent.addClass("has-error");
 
@@ -187,10 +199,98 @@ define([
             }
 
             // when all form is success
+            //var Project   = Parse.Object.extend("project");
+            //var myProject = new Project();
+
+            console.log( "name: " + inputNameText );
+            console.log( "type: " + typeValue );
+            console.log( "hour: " + inputHourText );
+            console.log( "start date: " + inputStartDateText );
+            console.log( "end date : " + inputEndDateText );
+            console.log( "brief : " + inputBriefText );
+            console.log( "content : " + inputContentText );
 
 
 
 
+            var Project   = Parse.Object.extend("project");
+            var myProject = new Project();
+
+
+
+            myProject.save({
+                name      : inputNameText,
+                type      : typeValue,
+                hour      : parseInt(inputHourText),
+                startDate : inputStartDateText,
+                endDate   : inputEndDateText,
+                brief     : inputBriefText,
+                content   : inputContentText,
+                user      : Parse.User.current(),
+                ACL       : new Parse.ACL(Parse.User.current())
+
+            }, {
+                success: function(myProject) {
+                    // Execute any logic that should take place after the object is saved.
+                    alert('New object created with objectId: ' + myProject.id);
+
+
+                    $inputNameText.val("");
+                    $inputHourText.val("");
+                    $inputStartDateText.val("");
+                    $inputEndDateText.val("");
+                    $inputBriefText.val("");
+                    $inputContentText.val("");
+                },
+                error: function(myProject, error) {
+                    // Execute any logic that should take place if the save fails.
+                    // error is a Parse.Error with an error code and description.
+                    alert('Failed to create new object, with error code: ' + error.description);
+                }
+            });
+
+
+        },
+
+        log: function(){
+
+        },
+
+        testSaveParse: function(){
+            var Project   = Parse.Object.extend("project");
+            var myProject = new Project();
+
+            //myProject.set( name, "test" );
+            //myProject.set( type, "main" );
+            /**myProject.set( "hour", "200" );
+            myProject.set( "start-date", "10/5/2013" );
+            myProject.set( "end-date", "12/7/2013" );
+            myProject.set( "brief", "brief brief" );
+            myProject.set( "brief", "content" );**/
+
+            myProject.save();
+
+
+            /**
+            myProject.save({
+                name: "test",
+                type: "main",
+                hour : 200,
+                startDate : "10/5/2013",
+                endDate   : "12/7/2013",
+                brief     : "brief brief",
+                content   : "content"
+            }, {
+                success: function(myProject) {
+                    // Execute any logic that should take place after the object is saved.
+                    alert('New object created with objectId: ' + myProject.id);
+                },
+                error: function(myProject, error) {
+                    // Execute any logic that should take place if the save fails.
+                    // error is a Parse.Error with an error code and description.
+                    alert('Failed to create new object, with error code: ' + error.description);
+                }
+            });*/
         }
 
     });

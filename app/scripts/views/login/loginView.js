@@ -43,14 +43,20 @@ define([
 
             Parse.User.logIn(userName, passWordName, {
                 success: function(user) {
-                    alert("loginSuccess");
+
                     myEvent.trigger("loginSuccess");
+
                 },
 
                 error: function(user, error) {
+
                     $self.find(".error").html("Invalid username or password. Please try again.").show();
+
                 }
             });
+
+            this.$el.find("#user").val("");
+            this.$el.find("#password").val("");
 
             event.preventDefault();
         }

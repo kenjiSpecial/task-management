@@ -15,6 +15,7 @@ define([
 
 	LoadHelper.prototype.fetch = function(){
 		// start to load the projectModelCollection
+        //console.log(projectModelCollection);
 		$.when( projectModelCollection.fetch() ).done(
 			_.bind( this.loadDone, this )
 		);
@@ -27,16 +28,17 @@ define([
 
 	LoadHelper.prototype.loadDone = function(){
 		this.currentLoadCount += 1;
-
+        //console.log("loadDone");
 
 		if( this.currentLoadCount == this.loadCount){
+            console.log("tet")
 			this.loadStatus = true;	
 			myEvent.trigger( "openingLoadDone" );
 			
 		}
 	}
 
-	var loadHelper = new LoadHelper();
+	window.loadHelper = new LoadHelper();
 
 	return loadHelper;
 } );

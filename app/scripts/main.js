@@ -59,11 +59,14 @@ require([
     'views/current/currentView',
 
     'helper/events',
-    'helper/loadHelper'
+    'helper/loadHelper',
+
+    'parse/object/project',
+    'parse/collection/projectCollection'
 
     //'../bower_components/sass-bootstrap/assets/js/holder'
 
-], function ( Backbone, userModel, projectModelCollection, NavbarView, LoginView, MainView, ImgListView, ImgTextListView, HomeNavView, DetailView, RegisterView, RelationshipView, CurrentView, myEvent, loadHelper ) {
+], function ( Backbone, userModel, projectModelCollection, NavbarView, LoginView, MainView, ImgListView, ImgTextListView, HomeNavView, DetailView, RegisterView, RelationshipView, CurrentView, myEvent, loadHelper, ProjectObject, projectCollection ) {
     var loadStatuses     = [ 'notLoading', 'loading', 'loadDone' ];
     var loadState        = loadStatuses[ 0 ];
 
@@ -100,8 +103,6 @@ require([
     var JS_KEY = "ja43CiuOaMm5hwCp0iPb7EXquKYbsTdK3Wfsj8qk";
 
 
-    setTimeout(handleClientLoad, 10);
-
     /** login **/
 
     function handleClientLoad ( ) {
@@ -128,27 +129,13 @@ require([
         init();
     }
 
-    myEvent.on("loginBtClick", function(){
 
-//        gapi.auth.authorize(
-//            {'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': true},
-//            handleAuthResult2);
 
+    myEvent.on("loginSuccess", function(){
+        loginView.hide();
+        navbarView.show();
+        appRouter.loginDone();
     });
-
-    function handleAuthResult2(authResult) {
-
-        if (authResult && !authResult.error) {
-
-            // loginStatus = true;
-
-            loginView.hide();
-            navbarView.show();
-            appRouter.loginDone();
-
-        }
-
-    }
 
 
     var AppRouter = Backbone.Router.extend({
@@ -164,9 +151,7 @@ require([
 
         initialize: function( ){
 
-            if(Parse.User.current()){
-                myEvent.on( "openingLoadDone", _.bind( this.loadDone, this ));
-            }
+            myEvent.on( "fetchDone", _.bind( this.fetchDone, this ));
 
             myEvent.on( "backToHome", _.bind(this.backToHome, this) );
 
@@ -182,14 +167,15 @@ require([
         },
 
         loginDone: function(){
-            if( loadHelper.loadStatus ){
+            if( projectCollection.fetchStatus ){
                 this.loadDone();
             }else{
 
             }
         },
 
-        loadDone: function( ) {
+        fetchDone: function( ) {
+            alert("fetchDone");
 
             imgTextListView.render();
             imgListView.render();
@@ -239,7 +225,7 @@ require([
             this.page = 'register';
 
             if ( Parse.User.current()) {
-                if( loadHelper.loadStatus ) {
+                if( projectCollection.fetchStatus ) {
 
                     registerView.show();
 
@@ -257,7 +243,7 @@ require([
             this.page = "projectRelationship";
 
             if ( Parse.User.current()) {
-                if( loadHelper.loadStatus ) {
+                if( projectCollection.fetchStatus ) {
 
                     relationshipView.show();
 
@@ -278,7 +264,7 @@ require([
 
             if( Parse.User.current() ){
 
-                if(loadHelper.loadStatus){
+                if(projectCollection.fetchStatus){
 
                     currentView.show();
 
@@ -300,8 +286,9 @@ require([
 
             //console.log('loginStatus: '+ loginStatus + ", loadHelper.loadStatus: " + loadHelper.loadStatus);
 
+
             if(Parse.User.current()){
-                if( loadHelper.loadStatus ){
+                if( projectCollection.fetchStatus ){
 
                     switch (query){
                         case 'list_text':
@@ -350,7 +337,7 @@ require([
 
             if(Parse.User.current()) {
 
-                if( loadHelper.loadStatus ) {
+                if( projectCollection.fetchStatus ) {
 
                     detailView.show( query );
 
@@ -415,13 +402,57 @@ require([
 
     var appRouter;
 
+    //setTimeout(handleClientLoad, 10);
+    init();
+
     function init( ) {
         Parse.initialize("7XMOsP7DvvTF3EbAaXj43FSZHAjv2Zl9YSz5N99b", "ja43CiuOaMm5hwCp0iPb7EXquKYbsTdK3Wfsj8qk");
         appRouter = new AppRouter;
         Backbone.history.start();
 
-        loadHelper.fetch();
+        if(Parse.User.current()){
+            loadHelper.fetch();
+            projectCollection.fetchStart();
+        }
 
+
+        /**
+        if(Parse.User.current()){
+            loadHelper.fetch();
+        }
+
+
+        // -----
+        var query = new Parse.Query("project");
+        query.equalTo("user", Parse.User.current());
+        query.find({
+            success: function(projects) {
+                console.log(projects);
+                for( var i = 0; i < projects.length; i++ ){
+                    var project = projects[i];
+                    console.log(project.get("name"));
+                }
+                //console.log(project.get("name"))
+                //for(var i )
+
+
+                // Do stuff
+
+            }
+        });
+         */
+        /**
+        window.projectCollection = new ProjectCollection();
+        var query = new Parse.Query(ProjectObject);
+        query.equalTo("user", Parse.User.current());
+        window.projectCollection.query = query;
+        window.projectCollection.fetch({
+            success: function(project){
+                console.log(window.projectCollection.toJSON())
+            }
+        });*/
+        //console.log(window.projectCollection.toJSON());
+        //projectCollection.fetchStart();
     }
 
 });
