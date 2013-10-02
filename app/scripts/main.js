@@ -18,24 +18,30 @@ require.config({
             exports: 'jquery'
         },
 
-        datePicker : ["jquery"],
-        jqueryBackStretch : ["jquery"]
+        datePicker        : ["jquery"],
+        jqueryBackStretch : ["jquery"],
+
+
     },
     paths: {
-        jquery: '../bower_components/jquery/jquery',
-        backbone: '../bower_components/backbone/backbone',
-        underscore: '../bower_components/underscore/underscore',
-        bootstrap: 'vendor/bootstrap',
-        text: '../bower_components/requirejs-text/text',
-        d3: '../bower_components/d3/d3',
-        datePicker: '../bower_components/gl-date-picker/glDatePicker',
-        jqueryBackStretch : '../bower_components/jquery-backstretch/jquery.backstretch'
+        jquery            : '../bower_components/jquery/jquery',
+        backbone          : '../bower_components/backbone/backbone',
+        underscore        : '../bower_components/underscore/underscore',
+        bootstrap         : 'vendor/bootstrap',
+        text              : '../bower_components/requirejs-text/text',
+        d3                : '../bower_components/d3/d3',
+        datePicker        : '../bower_components/gl-date-picker/glDatePicker',
+        jqueryBackStretch : '../bower_components/jquery-backstretch/jquery.backstretch',
+        parseLib          : '../bower_components/parse/parse-1.2.12',
+        jqueryFileUpload  : '../bower_components/jquery-file-upload/js/jquery.fileupload',
+        "jquery.ui.widget"    : '../bower_components/jquery-file-upload/js/vendor/jquery.ui.widget'
     }
 });
 
 require([
 
     'backbone',
+    'parseLib',
 
     'models/userModel',
 
@@ -66,7 +72,7 @@ require([
 
     //'../bower_components/sass-bootstrap/assets/js/holder'
 
-], function ( Backbone, userModel, projectModelCollection, NavbarView, LoginView, MainView, ImgListView, ImgTextListView, HomeNavView, DetailView, RegisterView, RelationshipView, CurrentView, myEvent, loadHelper, ProjectObject, projectCollection ) {
+], function ( Backbone, _Parse, userModel, projectModelCollection, NavbarView, LoginView, MainView, ImgListView, ImgTextListView, HomeNavView, DetailView, RegisterView, RelationshipView, CurrentView, myEvent, loadHelper, ProjectObject, projectCollection ) {
     var loadStatuses     = [ 'notLoading', 'loading', 'loadDone' ];
     var loadState        = loadStatuses[ 0 ];
 

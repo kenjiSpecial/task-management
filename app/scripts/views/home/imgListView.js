@@ -1,11 +1,11 @@
 define([
 	'backbone',
 
-	'collection/projectModelCollection',
+	'parse/collection/projectCollection',
 
 	'text!../../../templates/home/imgListTemplate.html'
 
-], function( Backbone, projectModelCollection, imgListTemplate ){
+], function( Backbone, projectCollection, imgListTemplate ){
 	// 
 	var imgListView = Backbone.View.extend({
 		el         : $("#home-imgList"),
@@ -15,10 +15,10 @@ define([
 		},
 
 		render     : function(){
-			var projectModelCollectionJson = projectModelCollection.toJSON();
+			var projectModelCollectionJson = projectCollection.getJson();
 			
-			var compiled = _.template( imgListTemplate,  { collection: projectModelCollectionJson });
-            this.$el.html(compiled);
+			//var compiled = _.template( imgListTemplate,  { collection: projectModelCollectionJson });
+            //this.$el.html(compiled);
 		},
 
 		show       : function( ){

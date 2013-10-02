@@ -5,8 +5,9 @@ define([
 
     'collection/projectModelCollection',
 
-    'text!../../../templates/register/registerTemplate.html'
-], function ( Backbone, datePicker, projectModelCollection, registerTemplate ) {
+    'text!../../../templates/register/registerTemplate.html',
+    //'jqueryFileUpload'
+], function ( Backbone, datePicker, projectModelCollection, registerTemplate, _jqueryFileUpload ) {
 
     var MainView = Backbone.View.extend({
 
@@ -15,7 +16,8 @@ define([
         events: {
             "change #thumbnailInputFile": "thumbnailFileChange",
             "change #backgroundInputFile":   "backgroundFileChange",
-            "click #task-register" : "taskRegister"
+            //"click #task-register" : "taskRegister"
+            "click #task-register" : "imageUploadTest"
         },
 
         initialize: function () {
@@ -26,6 +28,9 @@ define([
         },
 
         show       : function( ){
+
+            this.thumbnailFile = null;
+            this.backgroundFile = null;
 
             if(this.$el.css('display') == 'none'){
                 this.$el.show();
@@ -54,9 +59,9 @@ define([
                     continue;
                 }
 
-                var reader = new FileReader();
+                var thumbnailReader = new FileReader();
 
-                reader.onload = (function(theFile) {
+                thumbnailReader.onload = (function(theFile) {
                     return function(e) {
 
                         var imgTag = ['<img class="thumb" src="', e.target.result,
@@ -68,7 +73,8 @@ define([
                     };
                 })(file);
 
-                reader.readAsDataURL(file);
+                thumbnailReader.readAsDataURL(file);
+                this.thumbnailFile = file
             }
 
 
@@ -98,6 +104,7 @@ define([
                     };
                 })(file);
 
+                this.backgroundFile = file;
                 reader.readAsDataURL(file);
             }
         },
@@ -212,7 +219,7 @@ define([
 
 
 
-
+            /**
             var Project   = Parse.Object.extend("project");
             var myProject = new Project();
 
@@ -248,6 +255,13 @@ define([
                     alert('Failed to create new object, with error code: ' + error.description);
                 }
             });
+             */
+
+            // ------------------
+            //  upload the file
+            // ------------------
+
+
 
 
         },
@@ -291,6 +305,80 @@ define([
                     alert('Failed to create new object, with error code: ' + error.description);
                 }
             });*/
+        },
+
+        imageUploadTest : function() {
+            //alert("image upload test");
+            var $thumbnail = this.$el.find('#thumbnailInputFile');
+
+            window.$thumbnail = $thumbnail;
+            /**
+            $thumbnail.fileupload(
+                url: '/php/post-image.php',
+
+                drop: function (e, data) {
+                    console.log("drop");
+                    $.each(data.files, function (index, file) {
+                        alert('Dropped file: ' + file.name);
+                    });
+                },
+
+                change: function (e, data) {
+                    console.log("change");
+                    $.each(data.files, function (index, file) {
+                        alert('Selected file: ' + file.name);
+                    });
+                }
+
+            });
+            */
+
+            // var reader = new FileReader();
+            // console.log(this.thumbnailReader);
+
+            var Formdata;
+
+            /** thumbnailFile **/
+            if( this.thumbnailFile ){
+                if(!Formdata){
+                    Formdata = new FormData();
+                }
+                Formdata.append("images[]", this.thumbnailFile);
+            }
+
+            /** thumbnailFile **/
+            if( this.backgroundFile ){
+                if(!Formdata){
+                    Formdata = new FormData();
+                }
+
+                Formdata.append("images[]", this.backgroundFile);
+            }
+
+            if(Formdata){
+                $.ajax({
+                    url: "php/post-image.php",
+                    type: "POST",
+                    data: Formdata,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        //alert("success" + res);
+                        //document.getElementById("response").innerHTML = res;
+                        var $errorUl      = $("#error-ul");
+
+                        if(!res){
+                            // upload success
+                            alert("success");
+                        }else{
+                            $errorUl.append( res );
+                        }
+                        //console.log(res);
+                    }
+                });
+            }
+
+
         }
 
     });
