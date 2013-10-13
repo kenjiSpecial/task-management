@@ -1,17 +1,25 @@
 <div id="imgListContent" class="container">
 <%
+    console.log(collection);
+
 	for( var i = collection.length ; i > 0 ; i-- ){
 		var thumbnailURL, projectName, projectBrief, projectStatus;
 
-		if(collection[ i - 1 ].thumbnail.small){
-			thumbnailURL = collection[ i - 1 ].thumbnail.small;
-		}else{
-			thumbnailURL = 'null_small.jpg';
-		}
+        console.log(collection[ i - 1 ].thubmnailFileName);
+        var thumbnailURL = collection[ i - 1 ].thubmnailFileName;
+
+        if(thumbnailURL == "null"){
+            thumbnailURL = 'null_small.jpg';
+        }
 
 		projectName   = collection[i - 1].name;
 		projectBrief  = collection[i - 1].brief;
 		projectStatus = collection[i - 1].status;
+
+        var startDate = collection[i - 1].startDate;
+        var endDate   = collection[i - 1].endDate;
+
+        var contentId = collection[i - 1].objectId;
 		
 %>
 	 <div class="col-md-4">
@@ -20,7 +28,11 @@
 	 	</div>
 		<div class="des">
 			<h4 class="projectName"><%= projectName %></h4>
+            <p class="schedule">
+                schedule: <%= startDate %> - <%= endDate %>
+            </p>
 			<p class="brief"><%= projectBrief %></p>
+
 
 
 			<p class='content_btn'>
@@ -31,7 +43,7 @@
 	            </a>
 	            <% } %>
 
-	            <a class= "btn" href="#">
+	            <a class= "btn" href="#detail/<%= contentId %>">
 	                More Detail
 	            </a>
 

@@ -7,62 +7,61 @@ define([
 
     'text!../../../templates/register/registerTemplate.html',
     //'jqueryFileUpload'
-], function ( Backbone, datePicker, projectModelCollection, registerTemplate, _jqueryFileUpload ) {
+], function (Backbone, datePicker, projectModelCollection, registerTemplate, _jqueryFileUpload) {
 
     var MainView = Backbone.View.extend({
 
-        el       : $('#register-container'),
+        el: $('#register-container'),
 
         events: {
-            "change #thumbnailInputFile": "thumbnailFileChange",
-            "change #backgroundInputFile":   "backgroundFileChange",
-            //"click #task-register" : "taskRegister"
-            "click #task-register" : "imageUploadTest"
+            "change #thumbnailInputFile" : "thumbnailFileChange",
+            "change #backgroundInputFile": "backgroundFileChange",
+            "click #register-project"    : "registerProject"
         },
 
         initialize: function () {
-            this.$el.html( registerTemplate );
+            this.$el.html(registerTemplate);
             $('input#start-date').glDatePicker();
             $('input#end-date').glDatePicker();
 
         },
 
-        show       : function( ){
+        show: function () {
 
             this.thumbnailFile = null;
             this.backgroundFile = null;
 
-            if(this.$el.css('display') == 'none'){
+            if (this.$el.css('display') == 'none') {
                 this.$el.show();
             }
 
         },
 
-        hide       : function( ){
+        hide: function () {
             var elDisplay = this.$el.css('display');
 
-            if( elDisplay == 'block' || elDisplay == 'inline' ){
+            if (elDisplay == 'block' || elDisplay == 'inline') {
                 this.$el.hide();
             }
 
         },
 
-        thumbnailFileChange : function ( event ) {
+        thumbnailFileChange: function (event) {
             //window.testevent = event;
             // event.target.value = ""; empty the file.
             var files = event.target.files;
 
-            for(var i = 0; i < files.length; i ++){
+            for (var i = 0; i < files.length; i++) {
                 var file = files[i];
 
-                if( !file.type.match('image.*') ) {
+                if (!file.type.match('image.*')) {
                     continue;
                 }
 
                 var thumbnailReader = new FileReader();
 
-                thumbnailReader.onload = (function(theFile) {
-                    return function(e) {
+                thumbnailReader.onload = (function (theFile) {
+                    return function (e) {
 
                         var imgTag = ['<img class="thumb" src="', e.target.result,
                             '" title="', escape(theFile.name), '"/>'].join('');
@@ -80,20 +79,20 @@ define([
 
         },
 
-        backgroundFileChange : function ( event ) {
+        backgroundFileChange: function (event) {
             var files = event.target.files;
 
-            for(var i = 0; i < files.length; i ++){
+            for (var i = 0; i < files.length; i++) {
                 var file = files[i];
 
-                if( !file.type.match('image.*') ) {
+                if (!file.type.match('image.*')) {
                     continue;
                 }
 
                 var reader = new FileReader();
 
-                reader.onload = (function(theFile) {
-                    return function(e) {
+                reader.onload = (function (theFile) {
+                    return function (e) {
 
                         var imgTag = ['<img class="thumb" src="', e.target.result,
                             '" title="', escape(theFile.name), '"/>'].join('');
@@ -109,99 +108,116 @@ define([
             }
         },
 
-        taskRegister : function ( event ){
+        registerProject: function (event) {
             // check if the value is empty or not.
-            var $inputNameText      = $("#inputName");
-            var inputNameText       = $inputNameText.val();
-            var $formName           = $(".row-name");
+            var $inputNameText = $("#inputName");
+            var inputNameText = $inputNameText.val();
+            var $formName = $(".row-name");
 
-            var typeValue           = this.$el.find("#register-type").val();
+            var typeValue = this.$el.find("#register-type").val();
             // console.log(typeValue);
 
 
-            var $inputHourText      = $("#inputHour");
-            var inputHourText       = $inputHourText.val();
-            var $formHour           = $(".row-hours");
+            var $inputHourText = $("#inputHour");
+            var inputHourText = $inputHourText.val();
+            var $formHour = $(".row-hours");
 
             var $inputStartDateText = $("#start-date");
-            var inputStartDateText  = $inputStartDateText.val();
-            var $formStartDate      = $(".row-start-hour");
+            var inputStartDateText = $inputStartDateText.val();
+            var $formStartDate = $(".row-start-hour");
 
-            var $inputEndDateText   = $("#end-date");
-            var inputEndDateText    = $inputEndDateText.val();
-            var $formEndDate        = $(".row-end-hour");
+            var $inputEndDateText = $("#end-date");
+            var inputEndDateText = $inputEndDateText.val();
+            var $formEndDate = $(".row-end-hour");
 
-            var $inputBriefText     = $("#input-brief");
-            var inputBriefText      = $inputBriefText.val();
-            var $formBrief          = $(".row-brief");
+            var $inputBriefText = $("#input-brief");
+            var inputBriefText = $inputBriefText.val();
+            var $formBrief = $(".row-brief");
 
-            var $inputContentText   = $("#input-content");
-            var inputContentText    = $inputContentText.val();
-            var $formContent        = $(".row-content");
+            var $inputContentText = $("#input-content");
+            var inputContentText = $inputContentText.val();
+            var $formContent = $(".row-content");
 
 
-            var missedText    = false;
-            var $errorUl      = $("#error-ul");
+            var thubmnailFileNameVal;
+            if (this.thumbnailFile) {
+                thubmnailFileNameVal = this.thumbnailFile.name;
+            } else {
+                thubmnailFileNameVal = "null"
+            }
+
+
+            var backgroundFileNameVal;
+            if ( this.backgroundFile ) {
+                backgroundFileNameVal = this.backgroundFile.name;
+            } else {
+                backgroundFileNameVal = "null";
+            }
+
+            // -------------------------------------
+
+            var missedText = false;
+            var $errorUl = $("#error-ul");
 
             // this.testSaveParse();
 
             $errorUl.html("");
 
-            if( !inputNameText ) {
-               $errorUl.append( "<li class='text-danger'>Project Name is missed</li>" );
-               $formName.addClass("has-error");
+            if (!inputNameText) {
+                $errorUl.append("<li class='text-danger'>Project Name is missed</li>");
+                $formName.addClass("has-error");
 
-               missedText = true;
+                missedText = true;
             } else {
-                if($formName.hasClass("has-error")) $formName.removeClass("has-error");
+                if ($formName.hasClass("has-error")) $formName.removeClass("has-error");
             }
 
-            if( !inputHourText ) {
-                $errorUl.append( "<li class='text-danger'>Hours is missed</li>" );
+            if (!inputHourText) {
+                $errorUl.append("<li class='text-danger'>Hours is missed</li>");
                 $inputHourText.addClass("has-error");
 
                 missedText = true;
             } else {
-                if($formHour.hasClass("has-error")) $formHour.removeClass("has-error");
+                if ($formHour.hasClass("has-error")) $formHour.removeClass("has-error");
             }
 
-            if( !inputStartDateText ) {
-                $errorUl.append( "<li class='text-danger'>Start Date is missed</li>" );
+            if (!inputStartDateText) {
+                $errorUl.append("<li class='text-danger'>Start Date is missed</li>");
                 $formStartDate.addClass("has-error");
 
                 missedText = true;
             } else {
-                if($formStartDate.hasClass("has-error")) $formStartDate.removeClass("has-error");
+                if ($formStartDate.hasClass("has-error")) $formStartDate.removeClass("has-error");
             }
 
-            if( !inputEndDateText ) {
-                $errorUl.append( "<li class='text-danger'>End Date is missed</li>" );
+            if (!inputEndDateText) {
+                $errorUl.append("<li class='text-danger'>End Date is missed</li>");
                 $formEndDate.addClass("has-error");
 
                 missedText = true;
             } else {
-                if($formEndDate.hasClass("has-error")) $formEndDate.removeClass("has-error");
+                if ($formEndDate.hasClass("has-error")) $formEndDate.removeClass("has-error");
             }
 
-            if( !inputBriefText ) {
-                $errorUl.append( "<li class='text-danger'>Brief text is missed</li>" );
+            if (!inputBriefText) {
+                $errorUl.append("<li class='text-danger'>Brief text is missed</li>");
                 $formBrief.addClass("has-error");
 
                 missedText = true;
             } else {
-                if( $formBrief.hasClass("has-error") ) $formBrief.removeClass("has-error");
+                if ($formBrief.hasClass("has-error")) $formBrief.removeClass("has-error");
             }
 
-            if( !inputContentText ) {
-                $errorUl.append( "<li class='text-danger'>Content text is missed</li>" );
+            if (!inputContentText) {
+                $errorUl.append("<li class='text-danger'>Content text is missed</li>");
                 $formContent.addClass("has-error");
 
                 missedText = true;
             } else {
-                if( $formContent.hasClass("has-error") ) $formContent.removeClass("has-error");
+                if ($formContent.hasClass("has-error")) $formContent.removeClass("has-error");
             }
 
-            if( missedText ) {
+            if (missedText) {
                 return;
             }
 
@@ -209,35 +225,40 @@ define([
             //var Project   = Parse.Object.extend("project");
             //var myProject = new Project();
 
-            console.log( "name: " + inputNameText );
-            console.log( "type: " + typeValue );
-            console.log( "hour: " + inputHourText );
-            console.log( "start date: " + inputStartDateText );
-            console.log( "end date : " + inputEndDateText );
-            console.log( "brief : " + inputBriefText );
-            console.log( "content : " + inputContentText );
-
-
 
             /**
-            var Project   = Parse.Object.extend("project");
+             console.log( "name: " + inputNameText );
+             console.log( "type: " + typeValue );
+             console.log( "hour: " + inputHourText );
+             console.log( "start date: " + inputStartDateText );
+             console.log( "end date : " + inputEndDateText );
+             console.log( "brief : " + inputBriefText );
+             console.log( "content : " + inputContentText );
+             */
+
+
+
+
+            var Project = Parse.Object.extend("project");
             var myProject = new Project();
 
 
-
             myProject.save({
-                name      : inputNameText,
-                type      : typeValue,
-                hour      : parseInt(inputHourText),
-                startDate : inputStartDateText,
-                endDate   : inputEndDateText,
-                brief     : inputBriefText,
-                content   : inputContentText,
-                user      : Parse.User.current(),
-                ACL       : new Parse.ACL(Parse.User.current())
+                name: inputNameText,
+                thubmnailFileName : thubmnailFileNameVal,
+                backgroundFileName : backgroundFileNameVal,
+                type: typeValue,
+                startDate: inputStartDateText,
+                endDate: inputEndDateText,
+                brief: inputBriefText,
+                content: inputContentText,
+                user: Parse.User.current(),
+                status: "schedule",
+                hours: { done: 0, schedule: parseInt(inputHourText) },
+                ACL: new Parse.ACL(Parse.User.current())
 
             }, {
-                success: function(myProject) {
+                success: function (myProject) {
                     // Execute any logic that should take place after the object is saved.
                     alert('New object created with objectId: ' + myProject.id);
 
@@ -249,113 +270,53 @@ define([
                     $inputBriefText.val("");
                     $inputContentText.val("");
                 },
-                error: function(myProject, error) {
+                error: function (myProject, error) {
                     // Execute any logic that should take place if the save fails.
                     // error is a Parse.Error with an error code and description.
                     alert('Failed to create new object, with error code: ' + error.description);
                 }
             });
-             */
+
 
             // ------------------
             //  upload the file
             // ------------------
 
 
-
-
-        },
-
-        log: function(){
+            this.imageUpload();
 
         },
 
-        testSaveParse: function(){
-            var Project   = Parse.Object.extend("project");
-            var myProject = new Project();
-
-            //myProject.set( name, "test" );
-            //myProject.set( type, "main" );
-            /**myProject.set( "hour", "200" );
-            myProject.set( "start-date", "10/5/2013" );
-            myProject.set( "end-date", "12/7/2013" );
-            myProject.set( "brief", "brief brief" );
-            myProject.set( "brief", "content" );**/
-
-            myProject.save();
-
-
-            /**
-            myProject.save({
-                name: "test",
-                type: "main",
-                hour : 200,
-                startDate : "10/5/2013",
-                endDate   : "12/7/2013",
-                brief     : "brief brief",
-                content   : "content"
-            }, {
-                success: function(myProject) {
-                    // Execute any logic that should take place after the object is saved.
-                    alert('New object created with objectId: ' + myProject.id);
-                },
-                error: function(myProject, error) {
-                    // Execute any logic that should take place if the save fails.
-                    // error is a Parse.Error with an error code and description.
-                    alert('Failed to create new object, with error code: ' + error.description);
-                }
-            });*/
-        },
-
-        imageUploadTest : function() {
-            //alert("image upload test");
-            var $thumbnail = this.$el.find('#thumbnailInputFile');
-
-            window.$thumbnail = $thumbnail;
-            /**
-            $thumbnail.fileupload(
-                url: '/php/post-image.php',
-
-                drop: function (e, data) {
-                    console.log("drop");
-                    $.each(data.files, function (index, file) {
-                        alert('Dropped file: ' + file.name);
-                    });
-                },
-
-                change: function (e, data) {
-                    console.log("change");
-                    $.each(data.files, function (index, file) {
-                        alert('Selected file: ' + file.name);
-                    });
-                }
-
-            });
-            */
-
-            // var reader = new FileReader();
-            // console.log(this.thumbnailReader);
-
+        imageUpload: function () {
             var Formdata;
+            var filenames = [];
+            var updateData;
 
             /** thumbnailFile **/
-            if( this.thumbnailFile ){
-                if(!Formdata){
+            if (this.thumbnailFile) {
+                if (!Formdata) {
                     Formdata = new FormData();
                 }
+
                 Formdata.append("images[]", this.thumbnailFile);
+
             }
 
             /** thumbnailFile **/
-            if( this.backgroundFile ){
-                if(!Formdata){
+            if (this.backgroundFile) {
+                if (!Formdata) {
                     Formdata = new FormData();
                 }
 
                 Formdata.append("images[]", this.backgroundFile);
             }
 
-            if(Formdata){
+            updateData = { formData: Formdata, fileName: filenames };
+
+
+            if ( Formdata ) {
+                console.log(updateData);
+
                 $.ajax({
                     url: "php/post-image.php",
                     type: "POST",
@@ -365,18 +326,19 @@ define([
                     success: function (res) {
                         //alert("success" + res);
                         //document.getElementById("response").innerHTML = res;
-                        var $errorUl      = $("#error-ul");
+                        var $errorUl = $("#error-ul");
 
-                        if(!res){
+                        if (!res) {
                             // upload success
                             alert("success");
-                        }else{
-                            $errorUl.append( res );
+                        } else {
+                            $errorUl.append(res);
                         }
                         //console.log(res);
                     }
                 });
             }
+
 
 
         }

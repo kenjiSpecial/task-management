@@ -1,9 +1,19 @@
-<% 
+<%
+    var id = contentId;
+
 	var projectName   = model.name;
 	var projectType   = model.type;
+
 	var projectStatus = model.status;
+
+    if(!projectStatus){
+
+    }
+
 	var content       = model.content;
-	var schedule      = model.schedule;
+	var scheduleStartDate = model.startDate;
+    var scheduleEndDate      = model.endDate;
+
 	var done 		  = model.done;
 	var task          = model.tasks;
 %>
@@ -20,7 +30,12 @@
 	<!-- </div> -->
 <div class="row" id="detail-header">
     <div class="col-md-12">
+
+        <div class="bt">
         <div class="back"><span class="glyphicon glyphicon-remove"></span></div>
+        <div class="detail-edit"><a class="btn btn-primary" href="#edit/<%= id %>">Edit</a></div>
+        </div>
+
         <div class="detail-header-content">
             <div id="detail-head"></div>
             <div id="cover"></div>
@@ -39,13 +54,11 @@
 <div class="row detail-content">
 	<div class="col-md-4" id="first-content">
 
-        <p class="schedule">Schedule: <%= model.schedule.start.year %>. <%= model.schedule.start.month %>. <%= model.schedule.start.day %> -
-            <%= model.schedule.end.year %>. <%= model.schedule.end.month %> .<%= model.schedule.end.day %>
-        </p>
+        <p class="schedule">Schedule: <%= scheduleStartDate %> - <%= scheduleEndDate %></p>
 
         <p class="state">State:
             <% if ( model.done == null ){ %>
-                Null
+                Schedule
             <% }else{ %>
                 <%= model.done.start.year %>. <%= model.done.start.month %>. <%= model.done.start.day %> -
                 <% if( model.done.end == null ) { %>
@@ -112,7 +125,8 @@
         <h5 id='new-task'>New Task</h5>
         <form class="navbar-form pull-left">
 		  <input type="text" class="col-md-12" id='new-task-content' placeholder="New Task">
-		  <button type="submit" class="btn">create</button>
+		  <button type="submit" class="btn" id="">create</button>
 		</form>
+
 	</div>
 </div>

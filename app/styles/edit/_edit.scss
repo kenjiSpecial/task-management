@@ -1,0 +1,45 @@
+#edit-wrapper{
+  display: none;
+  .edit-project{
+    margin-bottom: 20px;
+  }
+
+  .thumbnail {
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    //overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .edit-content{
+    .row {
+      margin-bottom: 20px;
+
+      &.row-type {
+        margin-bottom: 40px;
+      }
+
+      &.row-cal{
+        margin-bottom: 40px;
+      }
+
+    }
+
+    .edit-bt {
+      .btn {
+        float: right;
+      }
+    }
+
+  }
+
+
+
+
+  .gldp-default{
+    left: 20px;
+    top: 45px;
+  }
+}

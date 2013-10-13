@@ -34,7 +34,8 @@ require.config({
         jqueryBackStretch : '../bower_components/jquery-backstretch/jquery.backstretch',
         parseLib          : '../bower_components/parse/parse-1.2.12',
         jqueryFileUpload  : '../bower_components/jquery-file-upload/js/jquery.fileupload',
-        "jquery.ui.widget"    : '../bower_components/jquery-file-upload/js/vendor/jquery.ui.widget'
+        "jquery.ui.widget": '../bower_components/jquery-file-upload/js/vendor/jquery.ui.widget',
+        "momentJS"          : "../bower_components/momentjs/moment"
     }
 });
 
@@ -64,6 +65,8 @@ require([
 
     'views/current/currentView',
 
+    'views/edit/editView',
+
     'helper/events',
     'helper/loadHelper',
 
@@ -72,7 +75,7 @@ require([
 
     //'../bower_components/sass-bootstrap/assets/js/holder'
 
-], function ( Backbone, _Parse, userModel, projectModelCollection, NavbarView, LoginView, MainView, ImgListView, ImgTextListView, HomeNavView, DetailView, RegisterView, RelationshipView, CurrentView, myEvent, loadHelper, ProjectObject, projectCollection ) {
+], function ( Backbone, _Parse, userModel, projectModelCollection, NavbarView, LoginView, MainView, ImgListView, ImgTextListView, HomeNavView, DetailView, RegisterView, RelationshipView, CurrentView, EditView, myEvent, loadHelper, ProjectObject, projectCollection ) {
     var loadStatuses     = [ 'notLoading', 'loading', 'loadDone' ];
     var loadState        = loadStatuses[ 0 ];
 
@@ -94,6 +97,8 @@ require([
     var relationshipView = new RelationshipView();
 
     var currentView      = new CurrentView();
+
+    var editView         = new EditView();
 
     /** -------------- **/
 
@@ -143,6 +148,10 @@ require([
         appRouter.loginDone();
     });
 
+    myEvent.on('editToDetail', function(query){
+        appRouter.navigate(query, {trigger: true, replace: true});
+    });
+
 
     var AppRouter = Backbone.Router.extend({
         routes: {
@@ -151,6 +160,7 @@ require([
             'current'       : 'current',
             'home/:query'   : 'home',
             'detail/:query' : 'detail',
+            'edit/:query'   : 'edit',
             // Default
             '*actions'      : 'defaultAction'
         },
@@ -181,15 +191,12 @@ require([
         },
 
         fetchDone: function( ) {
-            alert("fetchDone");
 
             imgTextListView.render();
             imgListView.render();
             mainView.render();
             relationshipView.render();
             currentView.render();
-
-
             navbarView.init( this.page );
 
             switch( this.page ){
@@ -201,7 +208,7 @@ require([
 
                 case 'detail':
 
-                    this.detail( );
+                    this.detail( this.query );
 
                     break;
 
@@ -219,6 +226,10 @@ require([
 
                 case "current":
                     this.current();
+                    break;
+
+                case "edit":
+                    this.edit( this.query );
                     break;
             }
         },
@@ -348,7 +359,28 @@ require([
                     detailView.show( query );
 
                     this.hideView();
-                    prevPageStatus = 'home';
+                    prevPageStatus = 'detail';
+                }
+
+            } else {
+                this.login();
+            }
+
+        },
+
+        edit     : function(query){
+
+            this.page = 'edit';
+            this.query = query;
+
+            if(Parse.User.current()) {
+
+                if( projectCollection.fetchStatus ) {
+
+                    editView.show( query );
+
+                    this.hideView();
+                    prevPageStatus = 'edit';
                 }
 
             } else {
@@ -364,6 +396,8 @@ require([
         },
 
         hideView      : function ( ) {
+            console.log(prevPageStatus);
+
             if( prevPageStatus && this.page != prevPageStatus ){
                 switch( prevPageStatus ) {
                     case 'home':
@@ -383,6 +417,9 @@ require([
                         break;
                     case 'current':
                         currentView.hide();
+                        break;
+                    case 'edit':
+                        editView.hide();
                         break;
 
                 }
@@ -412,6 +449,7 @@ require([
     init();
 
     function init( ) {
+
         Parse.initialize("7XMOsP7DvvTF3EbAaXj43FSZHAjv2Zl9YSz5N99b", "ja43CiuOaMm5hwCp0iPb7EXquKYbsTdK3Wfsj8qk");
         appRouter = new AppRouter;
         Backbone.history.start();
@@ -421,44 +459,8 @@ require([
             projectCollection.fetchStart();
         }
 
-
-        /**
-        if(Parse.User.current()){
-            loadHelper.fetch();
-        }
-
-
-        // -----
-        var query = new Parse.Query("project");
-        query.equalTo("user", Parse.User.current());
-        query.find({
-            success: function(projects) {
-                console.log(projects);
-                for( var i = 0; i < projects.length; i++ ){
-                    var project = projects[i];
-                    console.log(project.get("name"));
-                }
-                //console.log(project.get("name"))
-                //for(var i )
-
-
-                // Do stuff
-
-            }
-        });
-         */
-        /**
-        window.projectCollection = new ProjectCollection();
-        var query = new Parse.Query(ProjectObject);
-        query.equalTo("user", Parse.User.current());
-        window.projectCollection.query = query;
-        window.projectCollection.fetch({
-            success: function(project){
-                console.log(window.projectCollection.toJSON())
-            }
-        });*/
-        //console.log(window.projectCollection.toJSON());
-        //projectCollection.fetchStart();
     }
+
+    return appRouter;
 
 });

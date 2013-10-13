@@ -16,9 +16,11 @@ define([
 
 		render     : function(){
 			var projectModelCollectionJson = projectCollection.getJson();
+
+            console.log(projectModelCollectionJson);
 			
-			//var compiled = _.template( imgListTemplate,  { collection: projectModelCollectionJson });
-            //this.$el.html(compiled);
+			var compiled = _.template( imgListTemplate,  { collection: projectModelCollectionJson });
+            this.$el.html(compiled);
 		},
 
 		show       : function( ){

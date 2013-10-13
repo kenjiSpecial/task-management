@@ -1,0 +1,122 @@
+<div class="row edit-project">
+    <h2>Edit Project</h2>
+</div>
+
+<div class="row error-message">
+    <div class="col-lg-12" id="edit-error">
+        <ul id="error-ul">
+
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Thumbnail</h4>
+            </div>
+            <div class="col-lg-12 thumbnail" id="thumbnailImg">
+                <img class="src" src="images/null_small.jpg" alt="" id="thumbnailImageTag"/>
+            </div>
+            <p>
+                800px * 450px is recommended.
+            </p>
+            <div class="form-group">
+                <label for="thumbnailInputFile" class="sr-only">File input</label>
+                <input type="file" id="thumbnailInputFile">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Background</h4>
+            </div>
+            <div class="col-lg-12 thumbnail" id="backgroundImg">
+                <img class="src" src="images/null_small.jpg" alt=""  id="backgroundImageTag" />
+            </div>
+            <p>
+                1200x * 400px is recommended.
+            </p>
+            <div class="form-group">
+                <label for="backgroundInputFile" class="sr-only">File input</label>
+                <input type="file" id="backgroundInputFile">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-7 col-md-offset-1 edit-content">
+        <div class="row row-name">
+            <div class="form-group form-name">
+                <label for="inputName" class="col-lg-12 control-label">Project Name</label>
+                <div class="col-lg-6">
+                    <input type="name" class="form-control" id="inputNameEdit" placeholder="Project Name">
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-type">
+            <div class="col-lg-6">
+                <select class="form-control" id="edit-type">
+                    <option>main</option>
+                    <option>sub</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row row-hours">
+            <div class="form-group form-name">
+                <label for="inputHour" class="col-lg-12 control-label">Hours:</label>
+                <div class="col-lg-6">
+                    <input type="Hours" class="form-control" id="inputHour" placeholder="Hours">
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-cal">
+            <div class="form-group form-schedule">
+                <label for="input-schedule-start" class="col-lg-12 control-label">Schedule:</label>
+
+                <div class="col-lg-6 row-start-hour">
+                    <input type="text" id="edit-start-date" gldp-id="edit-start-date" class="form-control" placeholder="ScheduleStart"/>
+                    <div gldp-el="edit-start-date" class="cal" style="width:300px; height:300px;" ></div>
+                </div>
+
+                <div class="col-lg-6 row-end-hour">
+                    <input type="text" id="edit-end-date" gldp-id="edit-end-date" class="form-control" placeholder="ScheduleEnd"/>
+                    <div gldp-el="edit-end-date" class="cal" style="width:300px; height:300px;" ></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row row-brief">
+            <div class="form-group form-name">
+                <label for="inputBrief" class="col-lg-12 control-label">Breif:</label>
+                <div class="col-lg-12">
+                    <textarea class="form-control" rows="2" id="edit-input-brief"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row row-content">
+            <div class="form-group form-name">
+                <label for="inputfContent" class="col-lg-12 control-label">Content:</label>
+                <div class="col-lg-12">
+                    <textarea class="form-control" rows="6" id="edit-input-content"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row edit-bt">
+            <button type="button" class="btn btn-primary" id="edit-project">Edit</button>
+        </div>
+
+
+
+    </div>
+    <!--<textarea class="form-control" rows="3"></textarea>-->
+</div>

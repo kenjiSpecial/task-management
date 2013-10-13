@@ -10,7 +10,7 @@ define(
         fetchStatus: null,
 
         fetchStart : function(){
-            var query = new Parse.Query(this.model);;
+            var query = new Parse.Query(this.model);
             query.equalTo("user", Parse.User.current());
             this.query = query;
 

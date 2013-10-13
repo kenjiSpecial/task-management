@@ -170,7 +170,7 @@
 
     #imgListContent{
       overflow: hidden;
-      width: 100%px;
+      width: 100%;
       margin: auto;
 
       .col-md-4{
@@ -178,6 +178,10 @@
 
         &:nth-child(4n+0){
           margin-left: 0;
+        }
+
+        .schedule {
+          margin-bottom: 10px;
         }
 
         .brief{
