@@ -9,6 +9,10 @@ define([
 	var HomeNavView = Backbone.View.extend({
 		el         : '#home-nav' ,
 
+        /*events: {
+            "click .btn-timer-start": "timerStartHandler"
+        },*/
+
 		initialize : function(){
 			this.$el.css('display', 'none');
 			this.$list_view = $( '#list-view' );
@@ -41,6 +45,11 @@ define([
 			}
 
 		},
+
+        timerStartHandler : function(e){
+            alert("timerStartHandler");
+            e.preventDefault();
+        },
 
 		hideHome   : function ( ) {
 			this.$el.hide();

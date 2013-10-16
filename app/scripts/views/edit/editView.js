@@ -151,7 +151,7 @@ define([
             },
 
             editProject : function() {
-                console.log("edit");
+
                 var self = this;
 
                 var projectName = this.$el.find('#inputNameEdit').val();

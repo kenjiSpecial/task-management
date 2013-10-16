@@ -1,7 +1,7 @@
 define([
 	'backbone',
 
-	'collection/projectModelCollection',
+    'parse/collection/projectCollection',
 
 	'text!../../../templates/home/listTextTemplate.html'
 
@@ -16,7 +16,7 @@ define([
 
 		render     : function(){
 			var projectModelCollectionJson = projectModelCollection.toJSON();
-			
+
 			var compiled = _.template( listTextTemplate,  { collection: projectModelCollectionJson });
             this.$el.html( compiled );
 		},

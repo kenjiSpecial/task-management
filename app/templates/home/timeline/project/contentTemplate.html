@@ -1,15 +1,20 @@
-<div class="project-content row" id = "list_<%= model.id %>">
+<%
+        console.log(model);
+%>
+<div class="project-content row" id = "list_<%= model.objectId %>">
     <div class="col-md-8">
         <div class="project-image">
             <%
                 var thumbnailName;
-                if(model.thumbnail.small){
 
-                    thumbnailName = model.thumbnail.small;
+                if(model.backgroundFileName == "null"){
+
+
+                    thumbnailName = 'null_small.jpg';
 
                 }else{
-                    
-                    thumbnailName = 'null_small.jpg';
+
+                    thumbnailName = model.thumbnail.small;
 
                 }
 
@@ -24,13 +29,12 @@
     <div class="col-md-4 project-list">
         <h3 class="name"><%= model.name %></h3>
 
-        <p class="schedule">Schedule: <%= model.schedule.start.year %>. <%= model.schedule.start.month %>. <%= model.schedule.start.day %> -
-            <%= model.schedule.end.year %>. <%= model.schedule.end.month %> .<%= model.schedule.end.day %>
+        <p class="schedule">Schedule: <%= model.startDate  %> - <%= model.endDate %>
         </p>
 
         <p class="state">State:
-            <% if ( model.done == null ){ %>
-                Null
+            <% if ( model.status == "schedule" ){ %>
+                SCHEDULE
             <% }else{ %>
                 <%= model.done.start.year %>. <%= model.done.start.month %>. <%= model.done.start.day %> -
                 <% if( model.done.end == null ) { %>
@@ -50,7 +54,7 @@
             <li>Task:</li>
             <%
                 var tasks = model.tasks;
-                
+
                 var task_count;
                 if(tasks == null){
                     task_count = 0;
@@ -86,7 +90,7 @@
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" value="">
-                            <%= tasks[num].name %>
+                            <%= tasks[i].name %>
                         </label>
                     </div>
                 </li>
@@ -100,7 +104,7 @@
 
         
         <p class='content_btn'>
-            <a class= "btn" href="#detail/<%= model.id %>">
+            <a class= "btn" href="#detail/<%= model.objectId %>">
                 More Detail
             </a>
         </p>

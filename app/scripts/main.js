@@ -46,7 +46,6 @@ require([
 
     'models/userModel',
 
-    'collection/projectModelCollection',
 
     'views/navbar/navbarView',
 
@@ -67,15 +66,16 @@ require([
 
     'views/edit/editView',
 
+    'views/timer/timerView',
+
     'helper/events',
-    'helper/loadHelper',
 
     'parse/object/project',
     'parse/collection/projectCollection'
 
     //'../bower_components/sass-bootstrap/assets/js/holder'
 
-], function ( Backbone, _Parse, userModel, projectModelCollection, NavbarView, LoginView, MainView, ImgListView, ImgTextListView, HomeNavView, DetailView, RegisterView, RelationshipView, CurrentView, EditView, myEvent, loadHelper, ProjectObject, projectCollection ) {
+], function ( Backbone, _Parse, userModel, NavbarView, LoginView, MainView, ImgListView, ImgTextListView, HomeNavView, DetailView, RegisterView, RelationshipView, CurrentView, EditView, TimerView, myEvent, ProjectObject, projectCollection ) {
     var loadStatuses     = [ 'notLoading', 'loading', 'loadDone' ];
     var loadState        = loadStatuses[ 0 ];
 
@@ -99,6 +99,7 @@ require([
     var currentView      = new CurrentView();
 
     var editView         = new EditView();
+
 
     /** -------------- **/
 
@@ -455,7 +456,6 @@ require([
         Backbone.history.start();
 
         if(Parse.User.current()){
-            loadHelper.fetch();
             projectCollection.fetchStart();
         }
 

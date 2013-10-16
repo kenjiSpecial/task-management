@@ -6,13 +6,16 @@ define([
 
     var MainView = Backbone.View.extend({
 
-        el       : $('#register-container'),
+        el       : $('#timer-wrapper'),
 
         initialize: function () {
 
         },
 
         show       : function( ){
+
+
+
 
             if(this.$el.css('display') == 'none'){
                 this.$el.show();

@@ -3,7 +3,7 @@ define([
     'backbone',
 
     'models/userModel',
-    'collection/projectModelCollection',
+    'parse/collection/projectCollection',
 
     'helper/events',
 
@@ -19,28 +19,27 @@ define([
         $prevBt   : null,
 
         events: {
-            "click .btn"        : "clickTest" ,
+            "click .btn"        : "clickTest"
         },
 
         initialize: function( ) {
 
             this.$el      = $('#timeline-list-container');
-            
 
+            this.projectModelCollectionJson = projectModelCollection.toJSON();
+            console.log(this.projectModelCollectionJson);
 
-            this.projectLengh = projectModelCollection.length - 1;
-            this.currentId    = userModel.get('currentPage');
+            this.projectLengh = this.projectModelCollectionJson.length - 1;
+            this.currentId    = this.projectModelCollectionJson[this.projectModelCollectionJson.length - 1].objectId;
 
-            userModel.on( 'change:currentPage', _.bind( this.userModelCurrentPageChanged, this ) );
+            //userModel.on( 'change:currentPage', _.bind( this.userModelCurrentPageChanged, this ) );
 
         },
 
         render: function(){
 
-            var projectModel = projectModelCollection.get( this.currentId );
-            var projectModelJson = projectModel.toJSON();
-
-            var compiled = _.template( contentTemplate,  { model: projectModelJson });
+            //console.log(this.projectModelCollectionJson[0]);
+            var compiled = _.template( contentTemplate,  { model: this.projectModelCollectionJson[this.projectLengh] });
             this.$el.html(compiled);
 
             this.$nextBt = $('.next');

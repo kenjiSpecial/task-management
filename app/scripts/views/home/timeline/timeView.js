@@ -2,12 +2,11 @@ define([
     
     'backbone',
     'd3',
+    'momentJS',
     'helper/events',
-    'collection/projectModelCollection',
-    'models/userModel',
-    'helper/events'
+    'parse/collection/projectCollection',
 
-], function (Backbone, _d3, myEvents, projectModelCollection, userModel, myEvents) {
+], function ( Backbone, _d3, _momentJS, myEvents, projectCollection ) {
     var month_days = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30 , 31 ];
 
     var TimeView = Backbone.View.extend({
@@ -17,7 +16,7 @@ define([
 
         initialize: function(){
 
-            userModel.on( 'change:currentPage', _.bind( this.userModelCurrentPageChanged, this ) );
+            // userModel.on( 'change:currentPage', _.bind( this.userModelCurrentPageChanged, this ) );
 
         },
 
@@ -28,7 +27,7 @@ define([
             var duration, startDateDays;
             var width , height = 400;
             var margin              = { left: 50, right: 50, top: 60, bottom: 10 };
-            var currentSelectNumber =  userModel.get("currentPage") ;
+            // var currentSelectNumber =  userModel.get("currentPage") ;
 
 
             // calculation of the width of the svg rectangle
@@ -38,11 +37,17 @@ define([
 
             var monthWidth = 100;
 
-            for ( i = 0; i < projectModelCollection.length; i++ ) {
+            var projectModelCollectionJson = projectCollection.getJson();
 
-                projectModel = projectModelCollection.get( i );
-                var tempScheduleStartDate = projectModel.get("schedule").start;
-                var tempScheduleEndDate   = projectModel.get("schedule").end;
+            for ( i = 0; i < projectModelCollectionJson.length; i++ ) {
+
+                projectModel = projectModelCollectionJson[i];
+                var projectStartDate = moment(projectModel.startDate);
+                var projectEndDate   = moment(projectModel.endDate);
+
+
+                var tempScheduleStartDate = moment(projectModel.startDate);
+                var tempScheduleEndDate   = moment(projectModel.endDate);
 
                 if( i == 0){
 
@@ -50,18 +55,18 @@ define([
                     scheduleEndDate = tempScheduleEndDate;
 
                 }else{
-                    if ( scheduleStartDate.year >= tempScheduleStartDate.year ){
+                    if ( scheduleStartDate.year() >= tempScheduleStartDate.year() ){
 
-                        if ( scheduleStartDate.month > tempScheduleStartDate.month ){
+                        if ( scheduleStartDate.month() > tempScheduleStartDate.month() ){
 
                             scheduleStartDate = tempScheduleStartDate;
 
                         }
                     }
 
-                    if ( scheduleEndDate.year <= tempScheduleStartDate.year ){
+                    if ( scheduleEndDate.year() <= tempScheduleStartDate.year() ){
 
-                        if ( scheduleEndDate.month < tempScheduleStartDate.month ){
+                        if ( scheduleEndDate.month() < tempScheduleStartDate.month() ){
 
                             scheduleEndDate = tempScheduleEndDate;
 
@@ -71,8 +76,8 @@ define([
             }
 
             // calculate the duration of the project.
-            scheduleDuration = ( scheduleEndDate.year - scheduleStartDate.year ) * 12 + ( scheduleEndDate.month - scheduleStartDate.month ) ;
-
+            scheduleDuration = ( scheduleEndDate.year() - scheduleStartDate.year() ) * 365 + ( scheduleEndDate.week() - scheduleStartDate.week() ) * 7 + ( scheduleEndDate.day() - scheduleStartDate.day() );
+            scheduleDuration /= 30;
 
             if(scheduleDuration < 12){
                 width = 12 * monthWidth;
@@ -83,6 +88,8 @@ define([
                     monthWidth = (width / 12)|0;
 
                 }
+
+                scheduleDuration = 12;
             }else{
                 width = (scheduleDuration + 1)* monthWidth;
 
@@ -94,6 +101,7 @@ define([
                 }
             }
 
+
             // created the svg
             var svg = d3.select( "#time-line-wrapper" ).append( "svg" )
                 .attr( 'width' , width + margin.left + margin.right )
@@ -102,16 +110,18 @@ define([
 
             // created rectangle
 
-            var projectModelCollectionLength = projectModelCollection.length
+
+            var projectModelCollectionLength = projectModelCollectionJson.length;
             for ( i = 0; i < projectModelCollectionLength; i++ ) {
 
                 var svgRect = svg.append("g");
-                projectModel = projectModelCollection.get( i );
-                var projectStatus = projectModel.get("status")
+                projectModel = projectModelCollectionJson[i];
+                var projectStatus = projectModel.status;
+
                 
                 switch( projectStatus ){
                     
-                    case 'new'   :
+                    case 'schedule'   :
                         addNewRect(   projectModel, svgRect, margin, monthWidth, height, scheduleStartDate );
                         break;
 
@@ -124,12 +134,11 @@ define([
                         break;
                 }
 
-                //this.rects.push( doneRect );
             }
 
             // add click event to every rect.
             this.$timeLine = $('.timeline_project');
-            this.userModelCurrentPageChanged();
+            this.userModelCurrentPageChanged(projectModelCollectionJson.length - 1);
             this.$timeLine.click( function() {
                 var $this = $(this);
             	var idNumber = parseInt($this.attr('id'));
@@ -166,21 +175,21 @@ define([
             var yearCount = 0;
 
             var scheduleStartMonthString;
-            if( scheduleStartDate.month < 10){
-                scheduleStartMonthString =  '0' + String(scheduleStartDate.month);
+            if( scheduleStartDate.month() < 9){
+                scheduleStartMonthString =  '0' + String(scheduleStartDate.month() + 1);
             } else {
-                scheduleStartMonthString =  String(scheduleStartDate.month);
+                scheduleStartMonthString =  String(scheduleStartDate.month() + 1);
             }
 
             timeLineAxis.append("text")
                 .attr( "x", margin.left  - 24 )
                 .attr( "y", margin.top  - 35)
-                .text(  scheduleStartMonthString + ' / ' + scheduleStartDate.year )
+                .text(  scheduleStartMonthString + ' / ' + scheduleStartDate.year() )
                 .attr("class", "tl-first-text");
 
 
-            for( i = 0; i <= scheduleDuration; i++){
-                if( (scheduleStartDate.month + i) % 12 == 1){
+            for( i = 0; i <= scheduleDuration - 1; i++){
+                if( (scheduleStartDate.month() + i) % 12 == 0){
                     lineHeight = 8;
                     lineWidth  = 2;
                     yearCount += 1;
@@ -188,7 +197,7 @@ define([
                     timeLineAxis.append( "text" )
                         .attr( "x", margin.left + monthWidth * i - 18 )
                         .attr( "y", margin.top  - 35)
-                        .text(  scheduleStartDate.year + yearCount )
+                        .text(  scheduleStartDate.year() + yearCount )
                         .attr("class", "tl-text");
 
 
@@ -215,9 +224,11 @@ define([
                 .attr("stroke-width", 1)
                 .attr("stroke", "rgb(150, 150, 150)") ;
 
+
+
         },
 
-        userModelCurrentPageChanged: function(){
+        userModelCurrentPageChanged: function(value){
             this.$timeLine.each( function(){
 
                     var class_attribute = $(this).attr('class');
@@ -226,8 +237,10 @@ define([
                     }
 
             } );
+            var id = projectCollection.at(value).id;
+            console.log(id);
 
-            var currentID = "#" + userModel.get('currentPage').toString();
+            var currentID = "#" + id;
             $( currentID ).attr('class', 'doing timeline_project selected');
         }
 
@@ -237,12 +250,13 @@ define([
 
     function addNewRect(  projectModel, svgRect, margin, monthWidth, height, scheduleStartDate  ){
         // draw only schedule and done rect
+
         svgRect
             .attr('class', function(){
                 return 'schedule timeline_project'
             })
             .attr( "id", function(){
-                return projectModel.get( "id" );
+                return projectModel.objectId;
             });
 
         var scheduleRect = svgRect.append('rect');
@@ -252,15 +266,12 @@ define([
                 return 'scheduleRect';
             })
             .attr("x", function(){
-                var startDate = projectModel.get("schedule").start;
-                var startDateDays = startDate.day;
-
-                var x = margin.left + ( ( startDate.year - scheduleStartDate.year ) * 12 + ( startDate.month - scheduleStartDate.month ) + scheduleStartDate.day / month_days[ scheduleStartDate.month ] ) * monthWidth;
-
+                var startDate = moment(projectModel.startDate);
+                var x = margin.left + ( ( startDate.year() - scheduleStartDate.year() ) * 365 + ( startDate.week() - scheduleStartDate.week() ) * 7 + scheduleStartDate.day()  ) * monthWidth/30;
                 return x;
             })
             .attr("y", function(){
-                var type = projectModel.get( "type" );
+                var type = projectModel.type;
                 var marginTop;
 
                 if(type == "main"){
@@ -272,19 +283,17 @@ define([
                 return marginTop;
             })
             .attr( "width", function(){
-                var startDate = projectModel.get( "schedule" ).start;
+                var startDate = moment(projectModel.startDate);
+                var endDate = moment(projectModel.endDate);
 
-                startDateDays = startDate.day;
+                var projectDuration = ( ( endDate.year() - startDate.year() ) * 365 + (endDate.week() - startDate.week()) * 7 + (endDate.day() - startDate.day()) ) * monthWidth/30;
 
-                var endDate = projectModel.get( "schedule" ).end;
-                var endDateDays = endDate.day;
-
-                var projectDuration = ( ( endDate.year - startDate.year ) * 12 + endDate.month - startDate.month + (endDateDays - startDateDays)/ 30 ) * monthWidth;
+                console.log("width: ", projectDuration);
 
                 return projectDuration 
             }).
             attr('height', function(){
-                var type = projectModel.get( "type" );
+                var type = projectModel.type;
                 var recHeight;
 
                 if( type == "main" ){

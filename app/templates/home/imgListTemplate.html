@@ -1,11 +1,10 @@
 <div id="imgListContent" class="container">
 <%
-    console.log(collection);
 
 	for( var i = collection.length ; i > 0 ; i-- ){
 		var thumbnailURL, projectName, projectBrief, projectStatus;
 
-        console.log(collection[ i - 1 ].thubmnailFileName);
+
         var thumbnailURL = collection[ i - 1 ].thubmnailFileName;
 
         if(thumbnailURL == "null"){
@@ -38,7 +37,7 @@
 			<p class='content_btn'>
 				
 				<% if(projectStatus != 'done'){ %> 
-				<a class= "btn btn-info" href="#">
+				<a class= "btn btn-info btn-timer-start" href="#" project-id="<%= contentId %>">
 	                start Project
 	            </a>
 	            <% } %>
