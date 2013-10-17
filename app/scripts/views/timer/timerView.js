@@ -56,7 +56,7 @@ define([
                 if(this.count < 10){
                     time = "0:00 0" + this.count;
                 }else{
-                    time = "0:00" + this.count;
+                    time = "0:00 " + this.count;
                 }
 
             }else{
@@ -66,7 +66,7 @@ define([
                 var minuteString;
                 var secondString;
 
-                if(this.second < 10){
+                if( second < 10){
                     secondString = "0" + second;
                 } else {
                     secondString = second;
@@ -89,7 +89,7 @@ define([
                     minuteString = "0:" + tempMinute;
                 }
 
-                time = minuteString + secondString;
+                time = minuteString + " " +secondString;
 
             }
 
