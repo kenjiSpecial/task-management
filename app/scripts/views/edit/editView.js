@@ -221,7 +221,6 @@ define([
 
 
                 if ( Formdata ) {
-                    console.log(updateData);
 
                     $.ajax({
                         url: "php/post-image.php",

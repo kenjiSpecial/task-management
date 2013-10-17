@@ -12,7 +12,10 @@
     "d3": "~3.2.8",
     "text": "~2.0.10",
     "jquery-backstretch": "~2.0.4",
-    "gl-date-picker" : "https://github.com/glad/glDatePicker.git"
+    "gl-date-picker": "https://github.com/glad/glDatePicker.git",
+    "jquery-file-upload": "~8.8.5",
+    "datejs": "*",
+    "momentjs": "~2.2.1"
   },
   "devDependencies": {}
 }

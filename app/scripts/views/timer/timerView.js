@@ -24,10 +24,78 @@ define([
         },
 
         start: function(query){
-            this.timerStatus = true;
+
+            if(!this.timerStatus){
+
+                this.timerStatus = true;
+
+                this.query = query;
+                this.projectModel = projectModelCollection.get( query );
+                this.projectModelJson = this.projectModel.toJSON();
+
+                this.$el.find(".project-name").html(this.projectModelJson.name);
+
+                this.$el.addClass("active");
+
+                this.count = 0;
+
+                $("html, body").animate({ scrollTop: 0 });
+
+                this.timeInterval();
+            }
+
         },
 
         timeInterval : function(){
+
+            this.count ++;
+            var time;
+
+            if(this.count < 60){
+
+                if(this.count < 10){
+                    time = "0:00 0" + this.count;
+                }else{
+                    time = "0:00" + this.count;
+                }
+
+            }else{
+                var tempMinute = parseInt(this.count / 60);
+                var second     = this.count % 60;
+
+                var minuteString;
+                var secondString;
+
+                if(this.second < 10){
+                    secondString = "0" + second;
+                } else {
+                    secondString = second;
+                }
+
+                if(tempMinute < 60){
+                    var tempHour = parseInt(tempMinute / 60);
+                    var tempMin  = tempMinute % 60;
+
+                    if(tempMin < 10){
+                        minuteString = tempHour + ":0" + tempMin;
+                    }else{
+                        minuteString = tempHour + ":" + tempMin;
+                    }
+
+
+                }else if(tempMinute < 10){
+                    minuteString = "0:0" + tempMinute;
+                }else{
+                    minuteString = "0:" + tempMinute;
+                }
+
+                time = minuteString + secondString;
+
+            }
+
+            // html renewed
+            this.$el.find("#current").html(time);
+
 
             if(this.timerStatus){
                 setTimeout(this.timeIntervalLoop, 1000)
@@ -36,6 +104,12 @@ define([
         },
 
         stop : function(query){
+
+            /**
+            this.projectModel.save(did:
+            );
+             */
+
             this.timerStatus = 0;
         }
 

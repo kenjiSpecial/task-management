@@ -1,0 +1,16 @@
+#timer-wrapper{
+  overflow: hidden;
+  height: 0px;
+
+  @include single-transition($property: height, $duration: 1s, $function: ease-in-out);
+
+
+  &.active{
+    height: 50px;
+  }
+
+  #timer-content{
+    margin-top: 25px;
+  }
+
+}
