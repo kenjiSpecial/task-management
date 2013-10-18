@@ -29,6 +29,10 @@ define([
 
         start: function(query){
 
+            var today      = moment();
+            var weekOfYear = moment().week();
+            console.log(weekOfYear);
+
             if(!this.timerStatus){
 
                 this.timerStatus = true;
@@ -45,7 +49,37 @@ define([
 
                 $("html, body").animate({ scrollTop: 0 });
 
-                this.timeInterval();
+
+                var didLogs = this.projectModel.get("did");
+                var sumHours     = 0;
+                var sumWeekHours = 0;
+                var todayHours   = 0;
+
+
+                for( var i = 0; i < didLogs.length; i++ ){
+                    sumHours += didLogs[i].hours;
+
+                    var projectDate       = moment(didLogs[i].date);
+                    var projectWeekOfYear = projectDate.week();
+                    var differenceFromNow = today.diff(projectDate, 'days');
+
+
+                    if(weekOfYear == projectWeekOfYear){
+                        sumWeekHours += didLogs[i].hours;
+                    }
+
+                    // -------------------------
+
+                    if(differenceFromNow == 0){
+                        todayHours += didLogs[i].hours;
+                    }
+
+                }
+
+                this.$el.find("#today").html(todayHours);
+                this.$el.find("#week-task").html(sumWeekHours);
+                this.$el.find("#total-task-hours").html(sumHours);
+
 
                 this.timerIntervalHandler = setInterval(this.timeIntervalLoop, 1000);
             }
@@ -102,7 +136,6 @@ define([
 
             // html renewed
             this.$el.find("#current").html(time);
-
 
         },
 
