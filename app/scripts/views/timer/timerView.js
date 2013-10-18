@@ -11,6 +11,10 @@ define([
 
     var TimerView = Backbone.View.extend({
 
+        events   : {
+            "click .btn-timer-stop" : "stop"
+        },
+
         el       : $('#timer-wrapper'),
 
         initialize: function () {
@@ -42,13 +46,16 @@ define([
                 $("html, body").animate({ scrollTop: 0 });
 
                 this.timeInterval();
+
+                this.timerIntervalHandler = setInterval(this.timeIntervalLoop, 1000);
             }
 
         },
 
         timeInterval : function(){
 
-            this.count ++;
+            this.count++;
+            console.log(this.count);
             var time;
 
             if(this.count < 60){
@@ -97,20 +104,12 @@ define([
             this.$el.find("#current").html(time);
 
 
-            if(this.timerStatus){
-                setTimeout(this.timeIntervalLoop, 1000)
-            }
-
         },
 
-        stop : function(query){
+        stop : function(e){
+            clearTimeout(this.timerIntervalHandler);
 
-            /**
-            this.projectModel.save(did:
-            );
-             */
-
-            this.timerStatus = 0;
+            e.preventDefault()
         }
 
     });
