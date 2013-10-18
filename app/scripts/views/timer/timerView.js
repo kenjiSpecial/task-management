@@ -109,6 +109,44 @@ define([
         stop : function(e){
             clearTimeout(this.timerIntervalHandler);
 
+            var didPastLogs  = this.projectModel.get("did");
+
+            var countTime = this.count;
+            var today     = moment().format("L");
+            var didLog    = {date: today, hours: countTime};
+
+            var didLogs = [];
+
+            if(didPastLogs){
+
+                for(var i = 0; i < didPastLogs.length; i++){
+                    didLogs.push(didPastLogs[i]);
+                }
+
+                didLogs.push(didLog);
+
+            }else{
+                didLogs.push(didLog);
+            }
+
+            this.projectModel.save({
+                did : didLogs
+            }, {
+                success: function (myProject) {
+                    // Execute any logic that should take place after the object is saved.
+                    //alert('New object created with objectId: ' + myProject.id);
+                    alert("save");
+
+                },
+                error: function (myProject, error) {
+                    // Execute any logic that should take place if the save fails.
+                    // error is a Parse.Error with an error code and description.
+                    alert('Failed to create new object, with error code: ' + error.description);
+                }
+            });
+
+            //console.log(didHours);
+
             e.preventDefault()
         }
 
