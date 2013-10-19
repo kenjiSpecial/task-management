@@ -31,7 +31,6 @@ define([
 
             var today      = moment();
             var weekOfYear = moment().week();
-            console.log(weekOfYear);
 
             if(!this.timerStatus){
 
@@ -75,10 +74,10 @@ define([
                     }
 
                 }
-
-                this.$el.find("#today").html(todayHours);
-                this.$el.find("#week-task").html(sumWeekHours);
-                this.$el.find("#total-task-hours").html(sumHours);
+                this.$el.find("#current").html("0:00 00");
+                this.$el.find("#today").html( this.parseTimeHandler( todayHours ) );
+                this.$el.find("#week-task").html( this.parseTimeHandler( sumWeekHours ) );
+                this.$el.find("#total-task-hours").html( this.parseTimeHandler( sumHours ) );
 
 
                 this.timerIntervalHandler = setInterval(this.timeIntervalLoop, 1000);
@@ -86,23 +85,20 @@ define([
 
         },
 
-        timeInterval : function(){
+        parseTimeHandler : function( seconds ){
+            var timeString;
 
-            this.count++;
-            console.log(this.count);
-            var time;
+            if( seconds < 60 ){
 
-            if(this.count < 60){
-
-                if(this.count < 10){
-                    time = "0:00 0" + this.count;
+                if( seconds < 10){
+                    timeString = "0:00 0" + seconds;
                 }else{
-                    time = "0:00 " + this.count;
+                    timeString = "0:00 " + seconds;
                 }
 
             }else{
-                var tempMinute = parseInt(this.count / 60);
-                var second     = this.count % 60;
+                var tempMinute = parseInt( seconds / 60);
+                var second     = seconds % 60;
 
                 var minuteString;
                 var secondString;
@@ -130,9 +126,20 @@ define([
                     minuteString = "0:" + tempMinute;
                 }
 
-                time = minuteString + " " +secondString;
+                timeString = minuteString + " " +secondString;
 
             }
+
+            return timeString;
+        },
+
+        timeInterval : function(){
+
+            this.count++;
+            console.log(this.count);
+            var time;
+
+            time = this.parseTimeHandler(this.count);
 
             // html renewed
             this.$el.find("#current").html(time);
